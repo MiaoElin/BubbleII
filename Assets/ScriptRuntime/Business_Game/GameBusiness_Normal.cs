@@ -8,5 +8,6 @@ public static class GameBusiness_Normal {
     }
 
     public static void Tick() {
+        
     }
 }
