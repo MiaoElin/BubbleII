@@ -26,6 +26,7 @@ public class ClientMain : MonoBehaviour {
         var uiEevntCenter = ctx.uiApp.uIEventCenter;
         uiEevntCenter.OnStartClickHandle = () => {
             UIDomain.Panel_Login_Close(ctx);
+            GameBusiness_Normal.Enter(ctx);
         };
     }
 
@@ -34,7 +35,12 @@ public class ClientMain : MonoBehaviour {
     }
 
     void Update() {
-
+        var status = ctx.gameFsmCom.status;
+        if (status == GameStatus.Login) {
+            GameBusiness_Login.Tick();
+        } else if (status == GameStatus.Normal) {
+            GameBusiness_Normal.Tick();
+        }
 
     }
 
