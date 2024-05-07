@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class GridComponet {
 
@@ -18,26 +19,41 @@ public class GridComponet {
         Vector2 gridBottom = Vector2Const.GridBottom;
         float inRadius = GridConst.GridInsideRadius;
         float firstGridY = Mathf.Sqrt(3) * inRadius * (GridConst.ScreenVeticalCount - 1) + inRadius + gridBottom.y;
-        float firstGridX = gridBottom.x - (2 * inRadius * (GridConst.ScreenHorizontalCount) / 2) + inRadius;
+        float firstGridX1 = gridBottom.x - (2 * inRadius * (GridConst.ScreenHorizontalCount) / 2) + inRadius;
+        float firstGridX2 = gridBottom.x - (2 * inRadius * (GridConst.ScreenHorizontalCount) / 2) + 2 * inRadius;
         // 生成格子
         for (int i = 0; i < allGrid.Length; i++) {
-            var grid = allGrid[i];
+            var grid = new GridEntity();
             int x = GetX(i);
             int y = GetY(i);
             if (y % 2 == 1) {
+                // 单行
+                grid.worldPos.x = firstGridX2 + 2 * x * inRadius;
+                grid.worldPos.y = firstGridY - y * Mathf.Sqrt(3) * inRadius;
                 if (x == horizontalCount - 1) {
                     grid.enable = false;
                     allGrid[i] = grid;
                     continue;
                 }
+            } else {
+                // 双行
+                grid.worldPos.x = firstGridX1 + 2 * x * inRadius;
+                grid.worldPos.y = firstGridY - y * Mathf.Sqrt(3) * inRadius;
             }
             grid.enable = true;
             grid.index = i;
-            grid.worldPos.x = firstGridX + 2 * x * inRadius;
-            grid.worldPos.y = firstGridY - y * Mathf.Sqrt(3) * inRadius;
             grid.coordinatePos = GetCoordinatePos(x, y);
             allGrid[i] = grid;
         }
+    }
+
+    public bool TryGetValue(int index, out GridEntity grid) {
+        if (allGrid[index] != null) {
+            grid = allGrid[index];
+            return false;
+        }
+        grid = null;
+        return true;
     }
 
     public int GetX(int index) {
@@ -77,4 +93,10 @@ public class GridComponet {
         return new Vector3Int(x, y, z);
     }
 
+    public void Foreach(Action<GridEntity> action) {
+        for (int i = 0; i < allGrid.Length; i++) {
+            var grid = allGrid[i];
+            action(grid);
+        }
+    }
 }

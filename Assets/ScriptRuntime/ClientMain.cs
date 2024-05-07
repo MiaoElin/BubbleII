@@ -32,6 +32,7 @@ public class ClientMain : MonoBehaviour {
 
     private void Load() {
         ctx.uiApp.LoadAll();
+        ctx.asset.LoadAll();
     }
 
     void Update() {
@@ -63,5 +64,6 @@ public class ClientMain : MonoBehaviour {
     }
     private void UnLoad() {
         ctx.uiApp.UnLoad();
+        ctx.asset.Unload();
     }
 }

@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 1f766cb8960389f46bcfa869999eeadb
   m_currentHash:
     serializedVersion: 2
-    Hash: 298ac27013bb446f86fe55cf22c4d003
+    Hash: c1edaa864d7186687b833070210ba8fb
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -88,6 +88,9 @@ MonoBehaviour:
     m_LabelNames:
     - default
     - UI
+    - StageTM
+    - BubbleTM
+    - Entities
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 4c22c672f984eaf4f95fad5a4ccb36bc, type: 2}

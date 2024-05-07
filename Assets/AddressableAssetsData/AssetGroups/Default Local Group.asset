@@ -23,6 +23,54 @@ MonoBehaviour:
     m_SerializedLabels:
     - UI
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b65b6a533abfc3d4e8e0e9e66ce74e84
+    m_Address: Assets/ResourceRuntime/Entities/Stage/TM/StageTM_0.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - StageTM
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 17b879c580f1ea54da41cf70a26eb9b6
+    m_Address: Assets/ResourceRuntime/Entities/Bubble/BubbleTM_0.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BubbleTM
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f4d4883ab17d0454aba5009bc2d0433a
+    m_Address: Assets/ResourceRuntime/Entities/Bubble/BubbleTM_1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BubbleTM
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d0a5de3c170e30a40bee8bb461521e50
+    m_Address: Assets/ResourceRuntime/Entities/Bubble/BubbleTM_3.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BubbleTM
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5a6c9dde15208414a9b32c7d1068cfa7
+    m_Address: Assets/ResourceRuntime/Entities/Bubble/BubbleTM_4.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BubbleTM
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7a20ebe3d42cc4343b452be513a2f624
+    m_Address: Assets/ResourceRuntime/Entities/Bubble/BubbleTM_2.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BubbleTM
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8376a9f0ca6659a4cb4a376ce8d492ab
+    m_Address: Assets/ResourceRuntime/Entities/Bubble/BubbleEntity.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Entities
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b0185a74ecdc1cd42bd48d86ca97b905
+    m_Address: Assets/ResourceRuntime/Entities/BackSceneEntity/BackSceneEntity.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Entities
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3a44712dd1f75fd49aece42f23c0b5d4, type: 2}
   m_SchemaSet:
