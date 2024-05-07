@@ -36,4 +36,10 @@ public static class GameFactory {
         var backScene = GameObject.Instantiate(prefab).GetComponent<BackSceneEntity>();
         return backScene;
     }
+
+    public static ShooterEntity CreateShooter(GameContext ctx) {
+        ctx.asset.TryGet_Entity(typeof(ShooterEntity).Name, out var prefab);
+        var shooter = GameObject.Instantiate(prefab).GetComponent<ShooterEntity>();
+        return shooter;
+    }
 }

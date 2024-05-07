@@ -71,6 +71,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Entities
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7a08d8c470e934949b6f10a882360006
+    m_Address: Assets/ResourceRuntime/Entities/ShooterEntity/ShooterEntity.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Entities
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3a44712dd1f75fd49aece42f23c0b5d4, type: 2}
   m_SchemaSet:

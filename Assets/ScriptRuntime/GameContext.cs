@@ -7,6 +7,7 @@ public class GameContext {
     // === Entity ===
     public GameEntity game;
     public BackSceneEntity backScene;
+    public ShooterEntity shooter;
 
     // === Com ===
     public GameFSMComponet gameFsmCom;

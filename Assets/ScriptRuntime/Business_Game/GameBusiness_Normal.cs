@@ -23,6 +23,10 @@ public static class GameBusiness_Normal {
             grid.SetHasBubble(bubble.colorType, bubble.id);
         });
 
+        // 生成发射器
+        ctx.shooter = GameFactory.CreateShooter(ctx);
+
+
         ctx.gameFsmCom.EnterNormal();
     }
 
