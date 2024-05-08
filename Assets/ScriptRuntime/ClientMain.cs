@@ -36,11 +36,12 @@ public class ClientMain : MonoBehaviour {
     }
 
     void Update() {
+        float dt = Time.deltaTime;
         var status = ctx.gameFsmCom.status;
         if (status == GameStatus.Login) {
             GameBusiness_Login.Tick();
         } else if (status == GameStatus.Normal) {
-            GameBusiness_Normal.Tick();
+            GameBusiness_Normal.Tick(ctx, dt);
         }
 
     }

@@ -24,13 +24,44 @@ public static class GameBusiness_Normal {
         });
 
         // 生成发射器
-        ctx.shooter = GameFactory.CreateShooter(ctx);
-
+        ctx.shooter = ShooterDomain.Spawn(ctx);
+        ctx.shooter.readyBubble1 = FakeBubbleDomain.Spawn(ctx, UnityEngine.Random.Range(1, 5), VectorConst.ShooterPos, VectorConst.scale1f);
+        ctx.shooter.readyBubble2 = FakeBubbleDomain.Spawn(ctx, UnityEngine.Random.Range(1, 5), VectorConst.ReadyPos, VectorConst.scalehalf);
 
         ctx.gameFsmCom.EnterNormal();
     }
 
-    public static void Tick() {
+    public static void Tick(GameContext ctx, float dt) {
+
+        PreTick(ctx, dt);
+
+        ref var restSec = ref ctx.restSec;
+        const float Interval = 0.01f;
+        if (restSec < Interval) {
+            FixedTick(ctx, restSec);
+            restSec = 0;
+        } else {
+            while (restSec >= Interval) {
+                restSec -= Interval;
+                FixedTick(ctx, Interval);
+            }
+        }
+
+        LateTick(ctx, dt);
+
+    }
+    public static void PreTick(GameContext ctx, float dt) {
+        ShooterDomain.ShootLine(ctx);
+
+        Physics2D.Simulate(dt);
+    }
+
+    public static void FixedTick(GameContext ctx, float fixdt) {
+
+
+    }
+
+    public static void LateTick(GameContext ctx, float dt) {
 
     }
 }

@@ -16,7 +16,7 @@ public class GridComponet {
 
         allGrid = new GridEntity[GridConst.ScreenGridCount];
 
-        Vector2 gridBottom = Vector2Const.GridBottom;
+        Vector2 gridBottom = VectorConst.GridBottom;
         float inRadius = GridConst.GridInsideRadius;
         float firstGridY = Mathf.Sqrt(3) * inRadius * (GridConst.ScreenVeticalCount - 1) + inRadius + gridBottom.y;
         float firstGridX1 = gridBottom.x - (2 * inRadius * (GridConst.ScreenHorizontalCount) / 2) + inRadius;

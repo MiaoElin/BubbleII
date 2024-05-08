@@ -16,7 +16,7 @@ public static class GameFactory {
     }
 
     public static BubbleEntity CreateBubble(GameContext ctx, int typeId, Vector2 pos) {
-        bool has = ctx.asset.TryGet_bubbleTM(typeId, out var tm);
+        bool has = ctx.asset.TryGet_BubbleTM(typeId, out var tm);
         if (!has) {
             Debug.LogError($"GameFactory.CreateBubble {typeId} is not find");
         }
@@ -31,6 +31,19 @@ public static class GameFactory {
         return bubble;
     }
 
+    public static FakeBubbleEntity CreateFakeBubble(GameContext ctx, int typeId, Vector2 pos) {
+        bool has = ctx.asset.TryGet_FakeBubbleTM(typeId, out var tm);
+        if (!has) {
+            Debug.LogError($"GameFactory.CreateFakeBubble {typeId} is not find");
+        }
+        ctx.asset.TryGet_Entity(typeof(FakeBubbleEntity).Name, out var prefab);
+        FakeBubbleEntity fakeBubble = GameObject.Instantiate(prefab).GetComponent<FakeBubbleEntity>();
+        fakeBubble.typeId = typeId;
+        fakeBubble.sr.sprite = tm.spr;
+        fakeBubble.SetPos(pos);
+        return fakeBubble;
+    }
+
     public static BackSceneEntity CreateBackScene(GameContext ctx) {
         bool has = ctx.asset.TryGet_Entity(typeof(BackSceneEntity).Name, out var prefab);
         var backScene = GameObject.Instantiate(prefab).GetComponent<BackSceneEntity>();
@@ -42,4 +55,5 @@ public static class GameFactory {
         var shooter = GameObject.Instantiate(prefab).GetComponent<ShooterEntity>();
         return shooter;
     }
+
 }

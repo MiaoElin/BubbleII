@@ -8,16 +8,20 @@ public class Asset_Core {
     Dictionary<int, StageTM> allStageTMs;
     public AsyncOperationHandle stagePtr;
 
-    Dictionary<int, BubbleTM> allBubbleTMs;
+    Dictionary<int, BubbleTM> bubbleTMs;
     public AsyncOperationHandle bubblePtr;
 
     Dictionary<string, GameObject> entities;
     public AsyncOperationHandle entityPtr;
 
+    Dictionary<int, FakeBubbleTM> fakeBubbleTMs;
+    public AsyncOperationHandle fakeBubblePtr;
+
     public Asset_Core() {
         allStageTMs = new Dictionary<int, StageTM>();
-        allBubbleTMs = new Dictionary<int, BubbleTM>();
+        bubbleTMs = new Dictionary<int, BubbleTM>();
         entities = new Dictionary<string, GameObject>();
+        fakeBubbleTMs = new Dictionary<int, FakeBubbleTM>();
     }
 
     public void LoadAll() {
@@ -34,7 +38,7 @@ public class Asset_Core {
             bubblePtr = ptr;
             var list = ptr.WaitForCompletion();
             foreach (var tm in list) {
-                allBubbleTMs.Add(tm.typeId, tm);
+                bubbleTMs.Add(tm.typeId, tm);
             }
         }
         {
@@ -45,15 +49,28 @@ public class Asset_Core {
                 entities.Add(prefab.name, prefab);
             }
         }
+        {
+            var ptr = Addressables.LoadAssetsAsync<FakeBubbleTM>("FakeBubbleTM", null);
+            fakeBubblePtr = ptr;
+            var list = ptr.WaitForCompletion();
+            foreach (var tm in list) {
+                fakeBubbleTMs.Add(tm.typeId, tm);
+            }
+        }
     }
 
     public void Unload() {
         if (stagePtr.IsValid()) {
             Addressables.Release(stagePtr);
         }
-
         if (bubblePtr.IsValid()) {
             Addressables.Release(bubblePtr);
+        }
+        if (entityPtr.IsValid()) {
+            Addressables.Release(entityPtr);
+        }
+        if (fakeBubblePtr.IsValid()) {
+            Addressables.Release(fakeBubblePtr);
         }
     }
 
@@ -61,11 +78,16 @@ public class Asset_Core {
         return allStageTMs.TryGetValue(typeId, out tm);
     }
 
-    public bool TryGet_bubbleTM(int typeId, out BubbleTM tm) {
-        return allBubbleTMs.TryGetValue(typeId, out tm);
+    public bool TryGet_BubbleTM(int typeId, out BubbleTM tm) {
+        return bubbleTMs.TryGetValue(typeId, out tm);
+    }
+
+    public bool TryGet_FakeBubbleTM(int typeId, out FakeBubbleTM tm) {
+        return fakeBubbleTMs.TryGetValue(typeId, out tm);
     }
 
     public bool TryGet_Entity(string name, out GameObject prefab) {
         return entities.TryGetValue(name, out prefab);
     }
+
 }

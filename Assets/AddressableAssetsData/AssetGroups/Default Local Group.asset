@@ -77,6 +77,36 @@ MonoBehaviour:
     m_SerializedLabels:
     - Entities
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cc3467253609d12438fe4037daa8c6be
+    m_Address: Assets/ResourceRuntime/Entities/FakeBubble/FakeBubbleTM_1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FakeBubbleTM
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 85ec2c6dac520d145a0472d367621aa6
+    m_Address: Assets/ResourceRuntime/Entities/FakeBubble/FakeBubbleTM_2.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FakeBubbleTM
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 18a6c93ee1eb25a49a15ef12dcb057fd
+    m_Address: Assets/ResourceRuntime/Entities/FakeBubble/FakeBubbleTM_4.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FakeBubbleTM
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a08b0d8c3008a91469756448e7c50c59
+    m_Address: Assets/ResourceRuntime/Entities/FakeBubble/FakeBubbleEntity.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Entities
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4d528d80b18ba8941924f90ee3a69efe
+    m_Address: Assets/ResourceRuntime/Entities/FakeBubble/FakeBubbleTM_3.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FakeBubbleTM
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3a44712dd1f75fd49aece42f23c0b5d4, type: 2}
   m_SchemaSet:

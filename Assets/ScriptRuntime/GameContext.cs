@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class GameContext {
 
+    public float restSec;
     public UIApp uiApp;
 
     // === Entity ===
