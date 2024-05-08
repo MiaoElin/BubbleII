@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4775192108520873810}
   m_Layer: 7
   m_Name: TopCollider
-  m_TagString: Untagged
+  m_TagString: TopCollision
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -255,7 +255,7 @@ PlatformEffector2D:
   m_ColliderMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RotationalOffset: 180
+  m_RotationalOffset: 0
   m_UseOneWay: 1
   m_UseOneWayGrouping: 0
   m_SurfaceArc: 180
@@ -497,7 +497,7 @@ GameObject:
   - component: {fileID: 410239702783948487}
   m_Layer: 6
   m_Name: SideCollider
-  m_TagString: Untagged
+  m_TagString: SideCollision
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7085779776856487298}
   m_Layer: 8
   m_Name: BubbleEntity
-  m_TagString: Untagged
+  m_TagString: BubbleCollision
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52,6 +52,10 @@ MonoBehaviour:
   colorType: 0
   sr: {fileID: 6337642007552084810}
   rb: {fileID: -7191261984752931403}
+  faceDir: {x: 0, y: 0}
+  moveSpeed: 0
+  isReflect: 0
+  reflectDir: {x: 0, y: 0}
 --- !u!212 &6337642007552084810
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -132,7 +136,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &7085779776856487298
 CircleCollider2D:
   m_ObjectHideFlags: 0

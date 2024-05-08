@@ -13,4 +13,22 @@ public static class BubbleDomain {
         bubble.RemoveRigidboday();
         return bubble;
     }
+
+    public static void Move(BubbleEntity bubble) {
+        if (bubble.fsmCom.status == BubbleStatus.Shooting) {
+            if (bubble.isReflect) {
+                bubble.isReflect = false;
+                bubble.faceDir = bubble.reflectDir;
+                bubble.Move();
+            } else {
+                bubble.Move();
+            }
+        }
+    }
+
+    // public static void SetPos(BubbleEntity bubble, Vector2 pos) {
+    //     if (bubble.fsmCom.status == BubbleStatus.Arrived) {
+
+    //     }
+    // }
 }

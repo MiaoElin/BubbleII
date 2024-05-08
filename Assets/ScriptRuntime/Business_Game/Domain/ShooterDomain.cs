@@ -21,7 +21,6 @@ public static class ShooterDomain {
         var hitBubble1 = Physics2D.Raycast(VectorConst.ShooterPos, readyBubble1.faceDir, 100f, layerBubble);
 
         if (hitBubble1) {
-            Debug.Log(1);
             readyBubble1.landingPos = hitBubble1.point;
             shooter.SetLinePos(hitBubble1.point);
         } else if (hitTop1) {
@@ -34,6 +33,7 @@ public static class ShooterDomain {
             float angle = Mathf.Atan(faceDir.x / faceDir.y);
             // 向量逆时针旋转
             reflectDir = new Vector2(-Mathf.Sin(angle), Mathf.Cos(angle));
+            readyBubble1.reflectDir = reflectDir;
 
             var hitTop2 = Physics2D.Raycast(hitSide.point, reflectDir, 100f, layerTop);
             var hitBubble2 = Physics2D.Raycast(hitSide.point, reflectDir, 100f, layerBubble);
@@ -45,6 +45,30 @@ public static class ShooterDomain {
                 shooter.SetLinePos(hitSide.point, hitTop2.point);
             }
         }
+    }
 
+    public static void ShootBubble(GameContext ctx) {
+        if (ctx.input.isMouseLeftDown) {
+            ref var readyBubble1 = ref ctx.shooter.readyBubble1;
+            ref var readyBubble2 = ref ctx.shooter.readyBubble2;
+            ref var ShootingBubble = ref ctx.shooter.shootingBubble;
+            // 根据readybubble1生成bubble
+            ShootingBubble = BubbleDomain.Spawn(ctx, readyBubble1.typeId, VectorConst.ShooterPos);
+            ShootingBubble.faceDir = readyBubble1.faceDir;
+            ShootingBubble.reflectDir = readyBubble1.reflectDir;
+            ShootingBubble.fsmCom.EnterShooting();
+
+            // 销毁readyBubble1 将readyBubble2赋值给 readyBubble1
+            FakeBubbleDomain.Unspawn(readyBubble1);
+            var fakeBubble = readyBubble2;
+            readyBubble1 = fakeBubble;
+            readyBubble1.GetComponent<SpriteRenderer>().sortingOrder = 100;
+            readyBubble1.isMovingToShooterPos = true;
+
+            // 生成新的 readyBubble2
+            readyBubble2 = FakeBubbleDomain.Spawn(ctx, UnityEngine.Random.Range(1, 5), VectorConst.ReadyPos, VectorConst.scalehalf);
+            readyBubble2.GetComponent<SpriteRenderer>().sortingOrder = 99;
+
+        }
     }
 }

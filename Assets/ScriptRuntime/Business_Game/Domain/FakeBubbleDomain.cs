@@ -7,7 +7,7 @@ public static class FakeBubbleDomain {
         return fakeBubble;
     }
 
-    public static void Unspawn(GameContext ctx, FakeBubbleEntity fakeBubble) {
+    public static void Unspawn(FakeBubbleEntity fakeBubble) {
         GameObject.Destroy(fakeBubble.gameObject);
     }
 }

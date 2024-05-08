@@ -26,6 +26,7 @@ public static class GameFactory {
         bubble.typeId = typeId;
         bubble.colorType = tm.colorType;
         bubble.sr.sprite = tm.spr;
+        bubble.moveSpeed = tm.moveSpeed;
         bubble.id = ctx.iDService.bubbleRecord++;
         bubble.SetPos(pos);
         return bubble;

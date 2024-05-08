@@ -15,4 +15,9 @@ public static class GridDomain {
         }
     }
 
+    public static bool FindNearlyGrid(GameContext ctx, Vector2 pos, out GridEntity nearlyGrid) {
+        var gridCom = ctx.game.gridCom;
+        return gridCom.FindNearlyGrid(pos, out nearlyGrid);
+    }
+
 }

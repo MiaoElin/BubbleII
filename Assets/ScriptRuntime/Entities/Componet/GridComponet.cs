@@ -99,4 +99,25 @@ public class GridComponet {
             action(grid);
         }
     }
+
+    public bool FindNearlyGrid(Vector2 pos, out GridEntity nearlyGrid) {
+        nearlyGrid = null;
+        float nearlyDistance = 16;
+        for (int i = 0; i < allGrid.Length; i++) {
+            var grid = allGrid[i];
+            if (grid.hasBubble || !grid.enable) {
+                continue;
+            }
+            float distance = Vector2.SqrMagnitude(pos - grid.worldPos);
+            if (distance <= nearlyDistance) {
+                nearlyDistance = distance;
+                nearlyGrid = grid;
+            }
+        }
+        if (nearlyGrid == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

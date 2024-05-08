@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 4
   spr: {fileID: 21300000, guid: 522561d2ad2923c4e8437599dcdb1cb8, type: 3}
+  color: {r: 0.9960785, g: 0.9215687, b: 0.019607844, a: 1}
