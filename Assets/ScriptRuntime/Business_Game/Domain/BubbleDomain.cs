@@ -26,6 +26,11 @@ public static class BubbleDomain {
         }
     }
 
+    public static void SetStatic(BubbleEntity bubble) {
+        bubble.fsmCom.EnterStatic();
+        bubble.RemoveRigidboday();
+    }
+
     // public static void SetPos(BubbleEntity bubble, Vector2 pos) {
     //     if (bubble.fsmCom.status == BubbleStatus.Arrived) {
 

@@ -1,10 +1,13 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 public class GridComponet {
 
     GridEntity[] allGrid;
-    int horizontalCount;
+    public int horizontalCount;
+    public List<int> temp;
+
 
     public GridComponet() {
 
@@ -15,45 +18,45 @@ public class GridComponet {
         this.horizontalCount = horizontalCount;
 
         allGrid = new GridEntity[GridConst.ScreenGridCount];
+        temp = new List<int>();
 
-        Vector2 gridBottom = VectorConst.GridBottom;
-        float inRadius = GridConst.GridInsideRadius;
-        float firstGridY = Mathf.Sqrt(3) * inRadius * (GridConst.ScreenVeticalCount - 1) + inRadius + gridBottom.y;
-        float firstGridX1 = gridBottom.x - (2 * inRadius * (GridConst.ScreenHorizontalCount) / 2) + inRadius;
-        float firstGridX2 = gridBottom.x - (2 * inRadius * (GridConst.ScreenHorizontalCount) / 2) + 2 * inRadius;
-        // 生成格子
-        for (int i = 0; i < allGrid.Length; i++) {
-            var grid = new GridEntity();
-            int x = GetX(i);
-            int y = GetY(i);
-            if (y % 2 == 1) {
-                // 单行
-                grid.worldPos.x = firstGridX2 + 2 * x * inRadius;
-                grid.worldPos.y = firstGridY - y * Mathf.Sqrt(3) * inRadius;
-                if (x == horizontalCount - 1) {
-                    grid.enable = false;
-                    allGrid[i] = grid;
-                    continue;
-                }
-            } else {
-                // 双行
-                grid.worldPos.x = firstGridX1 + 2 * x * inRadius;
-                grid.worldPos.y = firstGridY - y * Mathf.Sqrt(3) * inRadius;
-            }
-            grid.enable = true;
-            grid.index = i;
-            grid.coordinatePos = GetCoordinatePos(x, y);
-            allGrid[i] = grid;
-        }
+        // Vector2 gridBottom = VectorConst.GridBottom;
+        // float inRadius = GridConst.GridInsideRadius;
+        // float firstGridY = Mathf.Sqrt(3) * inRadius * (GridConst.ScreenVeticalCount - 1) + inRadius + gridBottom.y;
+        // float firstGridX1 = gridBottom.x - (2 * inRadius * (GridConst.ScreenHorizontalCount) / 2) + inRadius;
+        // float firstGridX2 = gridBottom.x - (2 * inRadius * (GridConst.ScreenHorizontalCount) / 2) + 2 * inRadius;
+        // // 生成格子
+        // for (int i = 0; i < allGrid.Length; i++) {
+        //     var grid = new GridEntity();
+        //     int x = GetX(i);
+        //     int y = GetY(i);
+        //     if (y % 2 == 1) {
+        //         // 单行
+        //         grid.worldPos.x = firstGridX2 + 2 * x * inRadius;
+        //         grid.worldPos.y = firstGridY - y * Mathf.Sqrt(3) * inRadius;
+        //         if (x == horizontalCount - 1) {
+        //             grid.enable = false;
+        //             allGrid[i] = grid;
+        //             continue;
+        //         }
+        //     } else {
+        //         // 双行
+        //         grid.worldPos.x = firstGridX1 + 2 * x * inRadius;
+        //         grid.worldPos.y = firstGridY - y * Mathf.Sqrt(3) * inRadius;
+        //     }
+        //     grid.enable = true;
+        //     grid.index = i;
+        //     grid.coordinatePos = GetCoordinatePos(x, y);
+        //     allGrid[i] = grid;
+        // }
     }
 
-    public bool TryGetValue(int index, out GridEntity grid) {
-        if (allGrid[index] != null) {
-            grid = allGrid[index];
-            return false;
-        }
-        grid = null;
-        return true;
+    public GridEntity GetGrid(int index) {
+        return allGrid[index];
+    }
+
+    public void SetGrid(GridEntity grid) {
+        allGrid[grid.index] = grid;
     }
 
     public int GetX(int index) {

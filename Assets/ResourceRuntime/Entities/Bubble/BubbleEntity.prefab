@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7085779776856487298}
   m_Layer: 8
   m_Name: BubbleEntity
-  m_TagString: BubbleCollision
+  m_TagString: BubbleEntity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

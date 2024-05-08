@@ -3,4 +3,5 @@ public static class GridConst {
     public const int ScreenHorizontalCount = 15;
     public const int ScreenGridCount = 135;
     public const float GridInsideRadius = 1;
+    public const int SearchColorMinCount = 3;
 }

@@ -12,6 +12,8 @@ public class GridEntity {
     public Vector2Int viewPos;
     public Vector3Int coordinatePos;
 
+    public bool hasSearchColor;
+
     public void Ctor(int index, bool enable) {
         this.index = index;
         this.enable = enable;
