@@ -32,7 +32,6 @@ public static class GameBusiness_Normal {
     }
 
     public static void Tick(GameContext ctx, float dt) {
-
         PreTick(ctx, dt);
 
         ref var restSec = ref ctx.restSec;

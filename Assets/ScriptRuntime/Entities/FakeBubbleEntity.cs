@@ -5,6 +5,7 @@ public class FakeBubbleEntity : MonoBehaviour {
     public SpriteRenderer sr;
     public Vector2 faceDir;
     public Vector2 landingPos;
+    public Color color;
     public FakeBubbleEntity() {
         faceDir = new Vector2(0, 1);
     }

@@ -40,6 +40,7 @@ public static class GameFactory {
         FakeBubbleEntity fakeBubble = GameObject.Instantiate(prefab).GetComponent<FakeBubbleEntity>();
         fakeBubble.typeId = typeId;
         fakeBubble.sr.sprite = tm.spr;
+        fakeBubble.color = tm.color;
         fakeBubble.SetPos(pos);
         return fakeBubble;
     }

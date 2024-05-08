@@ -9,8 +9,10 @@ public static class ShooterDomain {
 
     public static void ShootLine(GameContext ctx) {
         var shooter = ctx.shooter;
-        shooter.SetLinREnable(true);
         var readyBubble1 = shooter.readyBubble1;
+        shooter.SetLinREnable(true);
+        shooter.SetlineColor(readyBubble1.color);
+        readyBubble1.faceDir = ctx.input.mouseWorldPos - VectorConst.ShooterPos;
         LayerMask layerTop = 1 << 7; // top;
         LayerMask layerSide = 1 << 6;
         LayerMask layerBubble = 1 << 8;
@@ -19,12 +21,12 @@ public static class ShooterDomain {
         var hitBubble1 = Physics2D.Raycast(VectorConst.ShooterPos, readyBubble1.faceDir, 100f, layerBubble);
 
         if (hitBubble1) {
+            Debug.Log(1);
             readyBubble1.landingPos = hitBubble1.point;
-            shooter.SetLinePos(hitBubble1.point, Vector3.zero);
-            Debug.DrawRay(shooter.shooterPos, new Vector3(0, 1), Color.red);
+            shooter.SetLinePos(hitBubble1.point);
         } else if (hitTop1) {
             readyBubble1.landingPos = hitTop1.point;
-            shooter.SetLinePos(hitTop1.point, Vector3.zero);
+            shooter.SetLinePos(hitTop1.point);
         } else if (hitSide) {
             Vector2 reflectDir;
             var faceDir = readyBubble1.faceDir;

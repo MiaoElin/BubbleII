@@ -4,4 +4,5 @@ using UnityEngine;
 public class FakeBubbleTM : ScriptableObject {
     public int typeId;
     public Sprite spr;
+    public Color color;
 }

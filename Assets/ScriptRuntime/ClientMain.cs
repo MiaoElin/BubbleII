@@ -37,6 +37,7 @@ public class ClientMain : MonoBehaviour {
 
     void Update() {
         float dt = Time.deltaTime;
+        ctx.input.Process();
         var status = ctx.gameFsmCom.status;
         if (status == GameStatus.Login) {
             GameBusiness_Login.Tick();

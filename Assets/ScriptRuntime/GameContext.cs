@@ -7,6 +7,7 @@ public class GameContext {
 
     // === Entity ===
     public GameEntity game;
+    public InputEntity input;
     public BackSceneEntity backScene;
     public ShooterEntity shooter;
 
@@ -23,7 +24,9 @@ public class GameContext {
 
     public GameContext() {
         uiApp = new UIApp();
+        
         game = new GameEntity();
+        input = new InputEntity();
         gameFsmCom = new GameFSMComponet();
 
         asset = new Asset_Core();
