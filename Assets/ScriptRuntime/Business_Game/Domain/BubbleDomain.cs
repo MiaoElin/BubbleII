@@ -14,16 +14,21 @@ public static class BubbleDomain {
         return bubble;
     }
 
+    public static void Unspawn(GameContext ctx, BubbleEntity bubble) {
+        ctx.bubbleRepo.Remove(bubble);
+        GameObject.Destroy(bubble.gameObject);
+    }
+
     public static void Move(BubbleEntity bubble) {
-        if (bubble.fsmCom.status == BubbleStatus.Shooting) {
-            if (bubble.isReflect) {
-                bubble.isReflect = false;
-                bubble.faceDir = bubble.reflectDir;
-                bubble.Move();
-            } else {
-                bubble.Move();
-            }
+        // if (bubble.fsmCom.status == BubbleStatus.Shooting) {
+        if (bubble.isReflect) {
+            bubble.isReflect = false;
+            bubble.faceDir = bubble.reflectDir;
+            bubble.Move();
+        } else {
+            bubble.Move();
         }
+        // }
     }
 
     public static void SetStatic(BubbleEntity bubble) {

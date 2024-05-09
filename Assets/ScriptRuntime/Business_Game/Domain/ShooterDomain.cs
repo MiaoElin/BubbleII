@@ -56,6 +56,7 @@ public static class ShooterDomain {
             ShootingBubble = BubbleDomain.Spawn(ctx, readyBubble1.typeId, VectorConst.ShooterPos);
             ShootingBubble.faceDir = readyBubble1.faceDir;
             ShootingBubble.reflectDir = readyBubble1.reflectDir;
+            ShootingBubble.landingPos = readyBubble1.landingPos;
             ShootingBubble.fsmCom.EnterShooting();
 
             // 销毁readyBubble1 将readyBubble2赋值给 readyBubble1

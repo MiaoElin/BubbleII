@@ -12,11 +12,12 @@ public class GridEntity {
     public Vector2Int viewPos;
     public Vector3Int coordinatePos;
 
+    public bool inSingular;
     public bool hasSearchColor;
 
-    public void Ctor(int index, bool enable) {
+    public void Ctor(int index) {
         this.index = index;
-        this.enable = enable;
+        hasSearchColor = false;
     }
 
     public void Reuse() {

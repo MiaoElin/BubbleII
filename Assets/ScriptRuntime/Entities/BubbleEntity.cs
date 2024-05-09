@@ -13,6 +13,7 @@ public class BubbleEntity : MonoBehaviour {
 
     public bool isReflect;
     public Vector2 reflectDir;
+    public Vector2 landingPos;
 
     public BubbleFsmComponent fsmCom;
 

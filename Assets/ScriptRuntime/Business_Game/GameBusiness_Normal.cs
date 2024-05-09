@@ -16,6 +16,7 @@ public static class GameBusiness_Normal {
         // 生成Bubble
         var gridCom = ctx.game.gridCom;
         gridCom.Foreach(grid => {
+
             if (!grid.enable || grid.typeId == 0) {
                 return;
             }
@@ -63,29 +64,15 @@ public static class GameBusiness_Normal {
             if (fsmCom.status == BubbleStatus.Shooting) {
                 BubbleDomain.Move(shootingBubble);
             } else if (fsmCom.status == BubbleStatus.Arrived) {
-
-                // 找到最近格子
-                bool has = GridDomain.FindNearlyGrid(ctx, shootingBubble.GetPos(), out var nearlyGrid);
-                if (has) {
-
-                    // 设置Bubble位置
-                    shootingBubble.SetPos(nearlyGrid.worldPos);
-                    fsmCom.EnterStatic();
-                    shootingBubble.RemoveRigidboday();
-
-                    // 将格子设为有babbule
-                    nearlyGrid.SetHasBubble(shootingBubble.colorType, shootingBubble.id);
-                    // 搜索同色
-                    GridDomain.GridSearchColor(ctx, nearlyGrid);
-                } else {
-                    Debug.LogError("There is no Grid Arround");
-                }
+                GameGameDomain.SetBubblePos_InGrid(ctx, shootingBubble);
             }
         }
 
+        // 消除同色的泡泡
+        GameGameDomain.UnspawnSameColorBubble(ctx);
 
-
-
+        // 消除掉落泡泡
+        
 
         Physics2D.Simulate(dt);
     }
