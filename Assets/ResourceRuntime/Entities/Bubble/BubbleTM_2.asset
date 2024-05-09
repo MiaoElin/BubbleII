@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: BubbleTM_2
   m_EditorClassIdentifier: 
   typeId: 2
+  score: 10
   colorType: 2
   spr: {fileID: 21300000, guid: 32bd03607b6936742b3b68b66d55012d, type: 3}
-  moveSpeed: 50
+  moveSpeed: 100
   vfx_BubbleBroke:
   - {fileID: 21300000, guid: 2f621382823ffe2409a19e43eff3b8ce, type: 3}
   - {fileID: 21300000, guid: 462dd574836168d499e986a71f9ace52, type: 3}

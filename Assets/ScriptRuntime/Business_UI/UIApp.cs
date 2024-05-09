@@ -43,4 +43,9 @@ public class UIApp {
     public void Panel_GameStatus_Open() {
         PanelGameStatusDomain.Open(ctx);
     }
+
+    public void Panel_GameStatus_Tick(int score) {
+        PanelGameStatusDomain.Tick(ctx, score);
+    }
+
 }

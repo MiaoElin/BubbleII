@@ -11,11 +11,17 @@ public static class PanelGameStatusDomain {
             panel.OnChangeCickHandle = () => {
                 ctx.uIEventCenter.Panel_GameStatus_ChangeHandle();
             };
+            ctx.Add_UI(typeof(Panel_GameStatus).Name, panel.gameObject);
         }
     }
 
     public static void Panel_GameStatus_Close(UIContext ctx) {
         var panel = ctx.TryGet_UI<Panel_GameStatus>();
         panel?.gameObject.SetActive(false);
+    }
+
+    public static void Tick(UIContext ctx, int score) {
+        var panel = ctx.TryGet_UI<Panel_GameStatus>();
+        panel?.Tick(score);
     }
 }

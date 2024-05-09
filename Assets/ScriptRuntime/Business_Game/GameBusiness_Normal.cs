@@ -103,8 +103,7 @@ public static class GameBusiness_Normal {
             BubbleDomain.FallingEasing_Tick(bubble, dt);
         }
 
-        ctx.game.gridCom.Foreach(grid => {
-            Debug.DrawLine(grid.worldPos, grid.worldPos + Vector2.down * 1, Color.red);
-        });
+        // 计分
+        UIDomain.Panel_GameStatus_Tick(ctx);
     }
 }

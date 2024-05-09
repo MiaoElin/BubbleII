@@ -25,10 +25,19 @@ public static class GameGameDomain {
                 return;
             }
             bool has = ctx.bubbleRepo.TryGet(grid.bubbleId, out var bubble);
+            // 播放消除vfx
             VFXDomain.VFXPlay(ctx, bubble);
+            // 加分
+            GameAddScore(ctx, bubble.score);
+            // 销毁bubble
             BubbleDomain.Unspawn(ctx, bubble);
+            // 重置grid
             grid.Reuse();
         });
+    }
+
+    public static void GameAddScore(GameContext ctx, int score) {
+        ctx.game.score += score;
     }
 
     public static void UpspawnFallingBubble(GameContext ctx) {
@@ -38,9 +47,13 @@ public static class GameGameDomain {
             }
             if (grid.isNeedFalling) {
                 bool has = ctx.bubbleRepo.TryGet(grid.bubbleId, out var bubble);
+                // bubble进入缓动
                 bubble.fsmCom.EnterFalling();
                 bubble.fallingPos = bubble.GetPos();
                 bubble.isFallingEasing = true;
+                // jiafe
+                GameAddScore(ctx, bubble.score);
+                // 重置grid
                 grid.Reuse();
             }
         });

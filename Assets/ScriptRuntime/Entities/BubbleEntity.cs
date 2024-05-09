@@ -5,6 +5,7 @@ public class BubbleEntity : MonoBehaviour {
 
     public int id;
     public int typeId;
+    public int score;
     public ColorType colorType;
     [SerializeField] public SpriteRenderer sr;
     [SerializeField] public Rigidbody2D rb;
@@ -19,7 +20,7 @@ public class BubbleEntity : MonoBehaviour {
     // === FSM ===
     public BubbleFsmComponent fsmCom;
 
-    // === 缓动 ===
+    // === 掉落缓动 ===
     public bool isFallingEasing;
     public float falling_timer;
     public float falling_MounDuration;
@@ -79,7 +80,7 @@ public class BubbleEntity : MonoBehaviour {
         if (falling_timer <= falling_MounDuration) {
             sr.transform.position = GFEasing.Ease2D(GFEasingEnum.MountainInCirc, falling_timer, falling_MounDuration, fallingPos, new Vector2(fallingPos.x, fallingPos.y + 3));
         } else if (falling_timer <= falling_Duration) {
-            sr.transform.position = GFEasing.Ease2D(GFEasingEnum.Linear, falling_timer, falling_MounDuration, fallingPos, fallingPos+Vector2.down*15);
+            sr.transform.position = GFEasing.Ease2D(GFEasingEnum.Linear, falling_timer, falling_MounDuration, fallingPos, fallingPos + Vector2.down * 15);
         } else if (falling_timer > falling_Duration) {
             isFallingEasing = false;
             falling_timer = 0;

@@ -12,4 +12,8 @@ public class Panel_GameStatus : MonoBehaviour {
             OnChangeCickHandle.Invoke();
         });
     }
+
+    public void Tick(int score) {
+        score_txt.GetComponent<Text>().text = "Score:" + score.ToString();
+    }
 }

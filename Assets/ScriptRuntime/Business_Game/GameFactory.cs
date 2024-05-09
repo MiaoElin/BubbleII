@@ -25,6 +25,7 @@ public static class GameFactory {
         BubbleEntity bubble = GameObject.Instantiate(prefab).GetComponent<BubbleEntity>();
         bubble.typeId = typeId;
         bubble.Ctor();
+        bubble.score = tm.score;
         bubble.colorType = tm.colorType;
         bubble.sr.sprite = tm.spr;
         bubble.moveSpeed = tm.moveSpeed;
