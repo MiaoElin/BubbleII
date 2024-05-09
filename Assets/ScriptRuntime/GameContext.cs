@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GameContext {
 
@@ -22,9 +23,12 @@ public class GameContext {
     // === Repo ===
     public BubbleRepo bubbleRepo;
 
+    // === VFX ===
+    public List<VFXEntity> vfxs;
+
     public GameContext() {
         uiApp = new UIApp();
-        
+
         game = new GameEntity();
         input = new InputEntity();
         gameFsmCom = new GameFSMComponet();
@@ -33,6 +37,8 @@ public class GameContext {
 
         bubbleRepo = new BubbleRepo();
         iDService = new IDService();
+
+        vfxs = new List<VFXEntity>();
     }
     public void Inject(Canvas screenCanvas) {
         uiApp.Inject(screenCanvas);

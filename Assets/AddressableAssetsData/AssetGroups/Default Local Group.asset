@@ -107,6 +107,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - FakeBubbleTM
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fb6ac18d9696e9a418fbe929297bea5a
+    m_Address: Assets/ResourceRuntime/Entities/VFXEntity.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Entities
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3a44712dd1f75fd49aece42f23c0b5d4, type: 2}
   m_SchemaSet:

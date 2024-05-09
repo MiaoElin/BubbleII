@@ -8,6 +8,7 @@ public static class GameGameDomain {
                 return;
             }
             bool has = ctx.bubbleRepo.TryGet(grid.bubbleId, out var bubble);
+            VFXDomain.VFXPlay(ctx, bubble);
             BubbleDomain.Unspawn(ctx, bubble);
             grid.Reuse();
         });

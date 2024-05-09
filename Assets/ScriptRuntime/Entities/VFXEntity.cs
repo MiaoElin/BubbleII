@@ -5,7 +5,7 @@ public class VFXEntity : MonoBehaviour {
     public Sprite[] allsprite;
     int currentIndex;
     float timer;
-    bool isEnd;
+    public bool isEnd;
 
     public void Ctor(Sprite[] allsprite) {
         this.allsprite = allsprite;

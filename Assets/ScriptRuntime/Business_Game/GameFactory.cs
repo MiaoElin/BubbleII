@@ -58,4 +58,12 @@ public static class GameFactory {
         return shooter;
     }
 
+    public static VFXEntity CreateVFX(GameContext ctx, Sprite[] sprites) {
+        ctx.asset.TryGet_Entity(typeof(VFXEntity).Name, out var prefab);
+        var vfx = GameObject.Instantiate(prefab).GetComponent<VFXEntity>();
+        vfx.allsprite = sprites;
+        vfx.Ctor(sprites);
+        return vfx;
+    }
+
 }

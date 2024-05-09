@@ -16,3 +16,8 @@ MonoBehaviour:
   colorType: 4
   spr: {fileID: 21300000, guid: 522561d2ad2923c4e8437599dcdb1cb8, type: 3}
   moveSpeed: 50
+  vfx_BubbleBroke:
+  - {fileID: 21300000, guid: 2f621382823ffe2409a19e43eff3b8ce, type: 3}
+  - {fileID: 21300000, guid: 462dd574836168d499e986a71f9ace52, type: 3}
+  - {fileID: 21300000, guid: 723c3e8c6da10df468044ab2db023441, type: 3}
+  - {fileID: 21300000, guid: 51c9d4209cb05c448aa23dd13c2d0071, type: 3}

@@ -72,7 +72,7 @@ public static class GameBusiness_Normal {
         GameGameDomain.UnspawnSameColorBubble(ctx);
 
         // 消除掉落泡泡
-        
+
 
         Physics2D.Simulate(dt);
     }
@@ -86,6 +86,11 @@ public static class GameBusiness_Normal {
         var readyBubble1 = ctx.shooter.readyBubble1;
         if (readyBubble1.isMovingToShooterPos) {
             readyBubble1.MoveByEasing(dt);
+        }
+
+        for (int i = 0; i < ctx.vfxs.Count; i++) {
+            var vfx = ctx.vfxs[i];
+            VFXDomain.Tick(ctx, vfx, dt);
         }
     }
 }

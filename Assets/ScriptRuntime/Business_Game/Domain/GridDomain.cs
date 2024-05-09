@@ -23,7 +23,7 @@ public static class GridDomain {
 
         Vector2 gridBottom = VectorConst.GridBottom;
         float inRadius = GridConst.GridInsideRadius;
-        float firstGridY = Mathf.Sqrt(3) * inRadius * (GridConst.ScreenVeticalCount - 1) + inRadius + gridBottom.y;
+        float firstGridY = Mathf.Sqrt(3) * inRadius * (GridConst.ScreenVeticalCount - 1) + inRadius + gridBottom.y + 0.5f;
         float firstGridX1 = gridBottom.x - (2 * inRadius * (GridConst.ScreenHorizontalCount) / 2) + inRadius;
         float firstGridX2 = gridBottom.x - (2 * inRadius * (GridConst.ScreenHorizontalCount) / 2) + 2 * inRadius;
         // 生成格子
@@ -102,10 +102,10 @@ public static class GridDomain {
         // 找周围的格子
         SearchColorArround(ctx, grid, temp);
         if (temp.Count < GridConst.SearchColorMinCount) {
-        foreach (var id in temp) {
-            var gri = gridCom.GetGrid(id);
-            gri.hasSearchColor = false;
-        }
+            foreach (var id in temp) {
+                var gri = gridCom.GetGrid(id);
+                gri.hasSearchColor = false;
+            }
         }
     }
 
