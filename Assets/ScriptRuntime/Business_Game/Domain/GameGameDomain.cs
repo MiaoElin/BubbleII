@@ -31,4 +31,5 @@ public static class GameGameDomain {
             Debug.LogError("There is no Grid Arround");
         }
     }
+
 }

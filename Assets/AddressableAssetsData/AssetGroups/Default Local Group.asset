@@ -113,6 +113,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Entities
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a85f57f0b0adae1469e74df3c7ba69af
+    m_Address: Assets/ResourceRuntime/Panel/GameStatus/Panel_Gamestatus.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3a44712dd1f75fd49aece42f23c0b5d4, type: 2}
   m_SchemaSet:

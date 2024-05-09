@@ -7,6 +7,9 @@ public static class GameBusiness_Normal {
         // 生成背景
         ctx.backScene = GameFactory.CreateBackScene(ctx);
 
+        // 打开UI
+        UIDomain.Panel_GameStatus_Open(ctx);
+
         // 生成关卡
         ctx.game.stage = GameFactory.CreateStage(ctx, 0);
 
@@ -84,10 +87,10 @@ public static class GameBusiness_Normal {
 
     public static void LateTick(GameContext ctx, float dt) {
         var readyBubble1 = ctx.shooter.readyBubble1;
-        if (readyBubble1.isMovingToShooterPos) {
-            readyBubble1.MoveByEasing(dt);
-        }
-
+        var readyBubble2 = ctx.shooter.readyBubble2;
+        readyBubble1.MoveByEasing_Tick(dt);
+        readyBubble1.ChangePosEasing(dt, true);
+        readyBubble2.ChangePosEasing(dt, false);
         for (int i = 0; i < ctx.vfxs.Count; i++) {
             var vfx = ctx.vfxs[i];
             VFXDomain.Tick(ctx, vfx, dt);

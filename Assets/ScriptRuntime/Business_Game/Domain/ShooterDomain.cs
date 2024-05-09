@@ -48,7 +48,7 @@ public static class ShooterDomain {
     }
 
     public static void ShootBubble(GameContext ctx) {
-        if (ctx.input.isMouseLeftDown) {
+        if (ctx.input.isMouseLeftDown && ctx.input.isMouseInGrid) {
             ref var readyBubble1 = ref ctx.shooter.readyBubble1;
             ref var readyBubble2 = ref ctx.shooter.readyBubble2;
             ref var ShootingBubble = ref ctx.shooter.shootingBubble;
@@ -71,5 +71,24 @@ public static class ShooterDomain {
             readyBubble2.GetComponent<SpriteRenderer>().sortingOrder = 99;
 
         }
+    }
+
+    public static void ChangeReadyBubble(GameContext ctx) {
+        ref var readyBubble1 = ref ctx.shooter.readyBubble1;
+        ref var readyBubble2 = ref ctx.shooter.readyBubble2;
+        var bubble2 = readyBubble2;
+
+        // 交换
+        readyBubble2 = readyBubble1;
+        readyBubble1 = bubble2;
+
+        //Bubble1的层级在上，也要修改成上
+        readyBubble2.GetComponent<SpriteRenderer>().sortingOrder = 99;
+        readyBubble1.GetComponent<SpriteRenderer>().sortingOrder = 100;
+
+        readyBubble1.isChangeEasing = true;
+        readyBubble2.isChangeEasing = true;
+
+
     }
 }

@@ -39,4 +39,8 @@ public class UIApp {
     public void Panel_Login_Close() {
         Panel_LoginDomain.Close(ctx);
     }
+
+    public void Panel_GameStatus_Open() {
+        PanelGameStatusDomain.Open(ctx);
+    }
 }

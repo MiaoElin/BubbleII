@@ -10,4 +10,5 @@ public static class FakeBubbleDomain {
     public static void Unspawn(FakeBubbleEntity fakeBubble) {
         GameObject.Destroy(fakeBubble.gameObject);
     }
+    
 }

@@ -28,6 +28,10 @@ public class ClientMain : MonoBehaviour {
             UIDomain.Panel_Login_Close(ctx);
             GameBusiness_Normal.Enter(ctx);
         };
+
+        uiEevntCenter.OnChangeClickHanle = () => {
+            ShooterDomain.ChangeReadyBubble(ctx);
+        };
     }
 
     private void Load() {

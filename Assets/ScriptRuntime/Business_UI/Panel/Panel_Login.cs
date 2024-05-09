@@ -15,7 +15,6 @@ public class Panel_Login : MonoBehaviour {
     }
 
     internal void Close() {
-        Debug.Log("IN");
         Destroy(gameObject);
     }
 }
