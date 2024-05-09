@@ -48,7 +48,6 @@ public class ClientMain : MonoBehaviour {
         } else if (status == GameStatus.Normal) {
             GameBusiness_Normal.Tick(ctx, dt);
         }
-
     }
 
     void OnApplicationQuit() {

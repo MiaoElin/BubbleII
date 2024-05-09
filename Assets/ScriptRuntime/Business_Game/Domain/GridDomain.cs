@@ -7,14 +7,18 @@ public static class GridDomain {
         var gridCom = ctx.game.gridCom;
         var stage = ctx.game.stage;
         // 生成格子
-        gridCom.Ctor(stage.horizontalCount);
+        gridCom.Ctor();
         SpawnAllGrid(ctx);
-        // 初始化格子数据 
+        // 初始化格子数据:遍历第一个格子到最后一个格子
         var gridTypes = stage.gridTypes;
-        for (int i = gridTypes.Length - GridConst.ScreenGridCount; i < gridTypes.Length; i++) {
-            int index = i - (gridTypes.Length - GridConst.ScreenGridCount);
+        int firstgrid = gridTypes.Count - GridConst.ScreenGridCount;
+        for (int i = firstgrid; i < gridTypes.Count; i++) {
+            int index = i - (firstgrid); // 第一个为0；
             var grid = gridCom.GetGrid(index);
             grid.typeId = gridTypes[i];
+        }
+        for (int i = gridTypes.Count - 1; i >= firstgrid; i--) {
+            gridTypes.Remove(i);
         }
     }
 
@@ -48,23 +52,6 @@ public static class GridDomain {
             grid.worldPos.y = firstGridY - y * Mathf.Sqrt(3) * inRadius;
             gridCom.SetGrid(grid);
         }
-    }
-
-    public static int GetX(int index) {
-        return index % GridConst.ScreenHorizontalCount;
-    }
-
-    public static int GetY(int index) {
-        return index / GridConst.ScreenHorizontalCount;
-    }
-
-    public static int GetIndex(int x, int y) {
-        return y * GridConst.ScreenHorizontalCount + x;
-    }
-
-    public static bool FindNearlyGrid(GameContext ctx, Vector2 pos, out GridEntity nearlyGrid) {
-        var gridCom = ctx.game.gridCom;
-        return gridCom.FindNearlyGrid(pos, out nearlyGrid);
     }
 
     #region Search Color
@@ -224,4 +211,56 @@ public static class GridDomain {
         }
     }
     #endregion
+
+    public static void SpawnNewLine(GameContext ctx) {
+        var gridCom = ctx.game.gridCom;
+        var gridTypes = ctx.game.stage.gridTypes;
+        int horizontalCount = GridConst.ScreenHorizontalCount;
+        gridCom.Foreach_Reverse(grid => {
+            if (!grid.hasBubble) {
+                return;
+            }
+            int newGridIndex = grid.index + horizontalCount;
+            if (newGridIndex > GridConst.GridIndexMax) {
+                // 游戏输了 todo
+                return;
+            }
+            var newGrid = gridCom.GetGrid(newGridIndex);
+            ResetGrid(newGrid, grid);
+        });
+
+        for (int i = gridTypes.Count - 1; i >= gridTypes.Count - 1 - horizontalCount; i--) {
+            var typeId = gridTypes[i];
+            // 第一个为0；随着i减小增d大
+            int index = (gridTypes.Count - 1) - i;
+            // 将0到horizontal个设置bubble
+            var grid = gridCom.GetGrid(index);
+            grid.typeId = typeId;
+        }
+
+
+    }
+    public static void ResetGrid(GridEntity newGrid, GridEntity oldGrid) {
+        newGrid.hasBubble = true;
+        newGrid.bubbleId = oldGrid.bubbleId;
+        newGrid.colorType = oldGrid.colorType;
+        newGrid.enable = oldGrid.enable;
+        newGrid.typeId = oldGrid.typeId;
+    }
+    public static int GetX(int index) {
+        return index % GridConst.ScreenHorizontalCount;
+    }
+
+    public static int GetY(int index) {
+        return index / GridConst.ScreenHorizontalCount;
+    }
+
+    public static int GetIndex(int x, int y) {
+        return y * GridConst.ScreenHorizontalCount + x;
+    }
+
+    public static bool FindNearlyGrid(GameContext ctx, Vector2 pos, out GridEntity nearlyGrid) {
+        var gridCom = ctx.game.gridCom;
+        return gridCom.FindNearlyGrid(pos, out nearlyGrid);
+    }
 }

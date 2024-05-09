@@ -4,6 +4,8 @@ using System.Collections.Generic;
 public class GameContext {
 
     public float restSec;
+    public int shootCount;
+
     public UIApp uiApp;
 
     // === Entity ===
@@ -26,7 +28,9 @@ public class GameContext {
     // === VFX ===
     public List<VFXEntity> vfxs;
 
+
     public GameContext() {
+        shootCount = 4;
         uiApp = new UIApp();
 
         game = new GameEntity();

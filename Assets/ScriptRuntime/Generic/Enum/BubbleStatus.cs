@@ -3,5 +3,6 @@ public enum BubbleStatus {
     Shooting,
     Arrived,
     Falling,
-    Static
+    Static,
+    Down
 }

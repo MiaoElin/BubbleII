@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class StageEntity {
 
@@ -6,5 +7,6 @@ public class StageEntity {
     public int level;
     public int horizontalCount;
     public int VerticalCount;
-    public int[] gridTypes;
+    // public int[] gridTypess;
+    public List<int> gridTypes;
 }

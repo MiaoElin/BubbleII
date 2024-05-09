@@ -49,29 +49,30 @@ public static class ShooterDomain {
 
     public static void ShootBubble(GameContext ctx) {
         ref var ShootingBubble = ref ctx.shooter.shootingBubble;
-        if (!ShootingBubble || ShootingBubble.fsmCom.status != BubbleStatus.Shooting) {
-            if (ctx.input.isMouseLeftDown && ctx.input.isMouseInGrid) {
-                ref var readyBubble1 = ref ctx.shooter.readyBubble1;
-                ref var readyBubble2 = ref ctx.shooter.readyBubble2;
-                // 根据readybubble1生成bubble
-                ShootingBubble = BubbleDomain.Spawn(ctx, readyBubble1.typeId, VectorConst.ShooterPos);
-                ShootingBubble.faceDir = readyBubble1.faceDir;
-                ShootingBubble.reflectDir = readyBubble1.reflectDir;
-                ShootingBubble.landingPos = readyBubble1.landingPos;
-                ShootingBubble.fsmCom.EnterShooting();
+        if (ShootingBubble && ShootingBubble.fsmCom.status == BubbleStatus.Shooting) {
+            return;
+        }
+        if (ctx.input.isMouseLeftDown && ctx.input.isMouseInGrid) {
+            ctx.shootCount--;
+            ref var readyBubble1 = ref ctx.shooter.readyBubble1;
+            ref var readyBubble2 = ref ctx.shooter.readyBubble2;
+            // 根据readybubble1生成bubble
+            ShootingBubble = BubbleDomain.Spawn(ctx, readyBubble1.typeId, VectorConst.ShooterPos);
+            ShootingBubble.faceDir = readyBubble1.faceDir;
+            ShootingBubble.reflectDir = readyBubble1.reflectDir;
+            ShootingBubble.landingPos = readyBubble1.landingPos;
+            ShootingBubble.fsmCom.EnterShooting();
 
-                // 销毁readyBubble1 将readyBubble2赋值给 readyBubble1
-                FakeBubbleDomain.Unspawn(readyBubble1);
-                var fakeBubble = readyBubble2;
-                readyBubble1 = fakeBubble;
-                readyBubble1.GetComponentInChildren<SpriteRenderer>().sortingOrder = 100;
-                readyBubble1.isMovingToShooterPos = true;
+            // 销毁readyBubble1 将readyBubble2赋值给 readyBubble1
+            FakeBubbleDomain.Unspawn(readyBubble1);
+            var fakeBubble = readyBubble2;
+            readyBubble1 = fakeBubble;
+            readyBubble1.GetComponentInChildren<SpriteRenderer>().sortingOrder = 100;
+            readyBubble1.isMovingToShooterPos = true;
 
-                // 生成新的 readyBubble2
-                readyBubble2 = FakeBubbleDomain.Spawn(ctx, UnityEngine.Random.Range(1, 5), VectorConst.ReadyPos, VectorConst.scalehalf);
-                readyBubble2.GetComponentInChildren<SpriteRenderer>().sortingOrder = 99;
-
-            }
+            // 生成新的 readyBubble2
+            readyBubble2 = FakeBubbleDomain.Spawn(ctx, UnityEngine.Random.Range(1, 5), VectorConst.ReadyPos, VectorConst.scalehalf);
+            readyBubble2.GetComponentInChildren<SpriteRenderer>().sortingOrder = 99;
         }
     }
 

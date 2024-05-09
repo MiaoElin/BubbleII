@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [CreateAssetMenu(menuName = "TM/StageTM", fileName = "StageTM_")]
 public class StageTM : ScriptableObject {
@@ -6,5 +7,6 @@ public class StageTM : ScriptableObject {
     public int level;
     public int horizontalCount;
     public int VerticalCount;
-    public int[] girdTypes;
+    // public int[] girdTypess;
+    public List<int> girdTypes;
 }

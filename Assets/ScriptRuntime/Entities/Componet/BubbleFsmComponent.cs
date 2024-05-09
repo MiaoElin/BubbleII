@@ -29,4 +29,7 @@ public class BubbleFsmComponent {
         isStatic = true;
     }
 
+    public void EnterDown(){
+        status=BubbleStatus.Down;
+    }
 }

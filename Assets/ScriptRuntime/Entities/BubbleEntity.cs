@@ -27,6 +27,12 @@ public class BubbleEntity : MonoBehaviour {
     public float falling_Duration;
     public Vector2 fallingPos;
 
+    // === 下移缓动 ===
+    public bool isDownEasing;
+    public float down_timer;
+    public float down_Duration;
+    public Vector2 downPos;
+
     public BubbleEntity() {
         fsmCom = new BubbleFsmComponent();
     }
@@ -35,6 +41,9 @@ public class BubbleEntity : MonoBehaviour {
         falling_timer = 0;
         falling_MounDuration = 0.3f;
         falling_Duration = 0.4f;
+
+        down_timer = 0;
+        down_Duration = 0.2f;
     }
 
     public void SetPos(Vector2 pos) {
@@ -81,10 +90,28 @@ public class BubbleEntity : MonoBehaviour {
             sr.transform.position = GFEasing.Ease2D(GFEasingEnum.MountainInCirc, falling_timer, falling_MounDuration, fallingPos, new Vector2(fallingPos.x, fallingPos.y + 3));
         } else if (falling_timer <= falling_Duration) {
             sr.transform.position = GFEasing.Ease2D(GFEasingEnum.Linear, falling_timer, falling_MounDuration, fallingPos, fallingPos + Vector2.down * 15);
-        } else if (falling_timer > falling_Duration) {
+        } else {
             isFallingEasing = false;
             falling_timer = 0;
             Destroy(gameObject);
+        }
+    }
+
+    public void EnterDown() {
+        fsmCom.EnterDown();
+        isDownEasing = true;
+    }
+
+    public void DownEasing_Tick(float dt) {
+        if (!isDownEasing) {
+            return;
+        }
+        down_timer += dt;
+        if (down_timer <= down_Duration) {
+            sr.transform.position = GFEasing.Ease2D(GFEasingEnum.Linear, down_timer, down_Duration, downPos, GetPos());
+        } else {
+            isDownEasing = false;
+            down_timer = 0;
         }
     }
 

@@ -78,8 +78,22 @@ public static class GameBusiness_Normal {
         GridDomain.UpdateFaling(ctx);
         GameGameDomain.UpspawnFallingBubble(ctx);
 
+        if (ctx.shootCount <= 0 && ctx.shooter.shootingBubble.fsmCom.status == BubbleStatus.Static) {
+            int bubbleLen = ctx.bubbleRepo.TakeAll(out var allBubbles);
+            for (int i = 0; i < bubbleLen; i++) {
+                var bubble = allBubbles[i];
+                if (bubble.fsmCom.status != BubbleStatus.Falling) {
+                    float downOffset = Mathf.Sqrt(3) * GridConst.GridInsideRadius;
+                    bubble.downPos = bubble.GetPos();
+                    bubble.SetPos(bubble.GetPos() + Vector2.down * downOffset);
+                    bubble.EnterDown();
+                }
+            }
+        }
+
         Physics2D.Simulate(dt);
     }
+
 
     public static void FixedTick(GameContext ctx, float fixdt) {
 
@@ -100,7 +114,12 @@ public static class GameBusiness_Normal {
         int bubbleLen = ctx.bubbleRepo.TakeAll(out var allBubbles);
         for (int i = 0; i < bubbleLen; i++) {
             var bubble = allBubbles[i];
-            BubbleDomain.FallingEasing_Tick(bubble, dt);
+            if (bubble.fsmCom.status == BubbleStatus.Falling) {
+                BubbleDomain.FallingEasing_Tick(bubble, dt);
+            } else if (bubble.fsmCom.status == BubbleStatus.Down) {
+                BubbleDomain.DownEasing_Tick(bubble, dt);
+            }
+
         }
 
         // 计分

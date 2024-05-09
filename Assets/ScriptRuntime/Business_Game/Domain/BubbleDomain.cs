@@ -40,4 +40,8 @@ public static class BubbleDomain {
         bubble.FallingEasing_Tick(dt);
     }
 
+    public static void DownEasing_Tick(BubbleEntity bubble, float dt) {
+        bubble.DownEasing_Tick(dt);
+    }
+
 }
