@@ -1,4 +1,5 @@
 using UnityEngine;
+using GameFunctions;
 
 public class BubbleEntity : MonoBehaviour {
 
@@ -15,10 +16,24 @@ public class BubbleEntity : MonoBehaviour {
     public Vector2 reflectDir;
     public Vector2 landingPos;
 
+    // === FSM ===
     public BubbleFsmComponent fsmCom;
+
+    // === 缓动 ===
+    public bool isFallingEasing;
+    public float falling_timer;
+    public float falling_MounDuration;
+    public float falling_Duration;
+    public Vector2 fallingPos;
 
     public BubbleEntity() {
         fsmCom = new BubbleFsmComponent();
+    }
+
+    public void Ctor() {
+        falling_timer = 0;
+        falling_MounDuration = 0.3f;
+        falling_Duration = 0.4f;
     }
 
     public void SetPos(Vector2 pos) {
@@ -43,11 +58,33 @@ public class BubbleEntity : MonoBehaviour {
         if (other.gameObject.tag == "SideCollision") {
             isReflect = true;
         }
-        if (other.gameObject.tag == "TopColliSion") {
+        if (other.gameObject.tag == "TopCollision") {
             fsmCom.EnterArrived();
         }
         if (other.gameObject.tag == "BubbleEntity") {
             fsmCom.EnterArrived();
         }
     }
+
+    // public void FallingEasing_Tick(float dt) {
+    //     fsmCom.FallingEasing_Tick(dt, () => {
+    //         sr.transform.position=GFEasing.Ease2D(GFEasingEnum.MountainInCirc,)
+    //     });
+    // }
+    public void FallingEasing_Tick(float dt) {
+        if (!isFallingEasing) {
+            return;
+        }
+        falling_timer += dt;
+        if (falling_timer <= falling_MounDuration) {
+            sr.transform.position = GFEasing.Ease2D(GFEasingEnum.MountainInCirc, falling_timer, falling_MounDuration, fallingPos, new Vector2(fallingPos.x, fallingPos.y + 3));
+        } else if (falling_timer <= falling_Duration) {
+            sr.transform.position = GFEasing.Ease2D(GFEasingEnum.Linear, falling_timer, falling_MounDuration, fallingPos, fallingPos+Vector2.down*15);
+        } else if (falling_timer > falling_Duration) {
+            isFallingEasing = false;
+            falling_timer = 0;
+            Destroy(gameObject);
+        }
+    }
+
 }

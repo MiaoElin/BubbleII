@@ -6,7 +6,9 @@ public class GridComponet {
 
     GridEntity[] allGrid;
     public int horizontalCount;
-    public List<int> temp;
+    public List<GridEntity> searchColorTemp;
+    public List<GridEntity> searchTractionTemp;
+
 
 
     public GridComponet() {
@@ -18,7 +20,8 @@ public class GridComponet {
         this.horizontalCount = horizontalCount;
 
         allGrid = new GridEntity[GridConst.ScreenGridCount];
-        temp = new List<int>();
+        searchColorTemp = new List<GridEntity>();
+        searchTractionTemp = new List<GridEntity>();
 
         // Vector2 gridBottom = VectorConst.GridBottom;
         // float inRadius = GridConst.GridInsideRadius;

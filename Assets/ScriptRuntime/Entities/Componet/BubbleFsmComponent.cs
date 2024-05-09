@@ -1,17 +1,17 @@
 using UnityEngine;
-
+using System;
 public class BubbleFsmComponent {
 
     public BubbleStatus status;
 
-    public bool isFalling;
     public bool isShooting;
     public bool isArraived;
     public bool isStatic;
 
+
+
     public void EnterFalling() {
         status = BubbleStatus.Falling;
-        isFalling = true;
     }
 
     public void EnterShooting() {
@@ -28,4 +28,5 @@ public class BubbleFsmComponent {
         status = BubbleStatus.Static;
         isStatic = true;
     }
+
 }

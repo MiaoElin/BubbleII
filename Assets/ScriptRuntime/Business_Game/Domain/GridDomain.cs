@@ -29,9 +29,9 @@ public static class GridDomain {
         // 生成格子
         for (int i = 0; i < GridConst.ScreenGridCount; i++) {
             var grid = new GridEntity();
-            grid.Ctor(i);
             int x = GetX(i);
             int y = GetY(i);
+            grid.Ctor(i, new Vector2Int(x, y));
             if (y % 2 == 1) {
                 // 单行
                 grid.worldPos.x = firstGridX2 + 2 * x * inRadius;
@@ -58,33 +58,8 @@ public static class GridDomain {
         return index / GridConst.ScreenHorizontalCount;
     }
 
-    public static int GetIndex_ByViewPos(int x, int y) {
+    public static int GetIndex(int x, int y) {
         return y * GridConst.ScreenHorizontalCount + x;
-    }
-
-    public static int GetIndex_ByCoorPos(Vector3Int coordinatePos) {
-        Vector2Int viewPos = GetViewPos(coordinatePos);
-        return GetIndex_ByViewPos(viewPos.x, viewPos.y);
-    }
-
-    public static Vector2Int GetViewPos(Vector3Int coordinatePos) {
-        int x = (coordinatePos.x + coordinatePos.y) / 2;
-        int y = coordinatePos.z;
-        return new Vector2Int(x, y);
-    }
-
-    public static Vector3Int GetCoordinatePos(Vector2Int viewPos) {
-        int x = viewPos.x - viewPos.y / 2;
-        int y = viewPos.y;
-        int z = -x - y;
-        return new Vector3Int(x, y, z);
-    }
-
-    public static Vector3Int GetCoordinatePos(int viewPosX, int viewPosY) {
-        int x = viewPosX - viewPosY / 2;
-        int y = viewPosY;
-        int z = -x - y;
-        return new Vector3Int(x, y, z);
     }
 
     public static bool FindNearlyGrid(GameContext ctx, Vector2 pos, out GridEntity nearlyGrid) {
@@ -92,43 +67,24 @@ public static class GridDomain {
         return gridCom.FindNearlyGrid(pos, out nearlyGrid);
     }
 
+    #region Search Color
     public static void GridSearchColor(GameContext ctx, int index) {
         var gridCom = ctx.game.gridCom;
         var grid = gridCom.GetGrid(index);
         grid.hasSearchColor = true;
-        var temp = gridCom.temp;
+        var temp = gridCom.searchColorTemp;
         temp.Clear();
-        temp.Add(grid.index);
+        temp.Add(grid);
         // 找周围的格子
         SearchColorArround(ctx, grid, temp);
         if (temp.Count < GridConst.SearchColorMinCount) {
-            foreach (var id in temp) {
-                var gri = gridCom.GetGrid(id);
+            foreach (var gri in temp) {
                 gri.hasSearchColor = false;
             }
         }
     }
 
-    public static void SearchColorArround(GameContext ctx, GridEntity grid, List<int> temp) {
-        // for (int j = -1; j <= 1; j++) {
-        //     // 上行
-        //     if (j == -1) {
-        //         for (int i = 0; i <= 1; i++) {
-        //             SearchColor(ctx, grid, i, j, ref temp);
-        //         }
-        //     } else if (j == 0) {
-        //         for (int i = -1; i <= 1; i++) {
-        //             if (i == 0) {
-        //                 continue;
-        //             }
-        //             SearchColor(ctx, grid, i, j, ref temp);
-        //         }
-        //     } else if (j == 1) {
-        //         for (int i = -1; i <= 0; i++) {
-        //             SearchColor(ctx, grid, i, j, ref temp);
-        //         }
-        //     }
-        // }
+    public static void SearchColorArround(GameContext ctx, GridEntity grid, List<GridEntity> temp) {
         var line = GetY(grid.index);
         bool isSingular = false;
         if (line % 2 == 1) {
@@ -156,27 +112,7 @@ public static class GridDomain {
             }
         }
     }
-
-    public static void SearchColor(GameContext ctx, GridEntity centerGrid, int xOffset, int yOffset, List<int> temp) {
-        // var gridCom = ctx.game.gridCom;
-        // var horizontalCount = GridConst.ScreenHorizontalCount;
-        // var VerticalCount = GridConst.ScreenVeticalCount;
-        // int x = centerGrid.coordinatePos.x + xOffset;
-        // int y = centerGrid.coordinatePos.y + yOffset;
-        // Vector2 viewPos = GetViewPos(new Vector3Int(x, y, -x - y));
-        // if (viewPos.x < 0 || viewPos.x > horizontalCount || viewPos.y < 0 || viewPos.y > VerticalCount) {
-        //     return;
-        // }
-        // int newIndex = GetIndex_ByCoorPos(new Vector3Int(x, y, -x - y));
-        // var newGrid = gridCom.GetGrid(newIndex);
-        // if (!newGrid.hasBubble || newGrid.hasSearchColor) {
-        //     return;
-        // }
-        // if (newGrid.colorType == centerGrid.colorType) {
-        //     newGrid.hasSearchColor = true;
-        //     temp.Add(newIndex);
-        //     SearchColorArround(ctx, newGrid, ref temp);
-        // }
+    public static void SearchColor(GameContext ctx, GridEntity centerGrid, int xOffset, int yOffset, List<GridEntity> temp) {
         var gridCom = ctx.game.gridCom;
         var horizontalCount = GridConst.ScreenHorizontalCount;
         var VerticalCount = GridConst.ScreenVeticalCount;
@@ -185,15 +121,107 @@ public static class GridDomain {
         if (x < 0 || x >= horizontalCount || y < 0 || y >= VerticalCount) {
             return;
         }
-        int index = GetIndex_ByViewPos(x, y);
+        int index = GetIndex(x, y);
         var grid = gridCom.GetGrid(index);
         if (!grid.hasBubble || grid.hasSearchColor) {
             return;
         }
         if (grid.colorType == centerGrid.colorType) {
             grid.hasSearchColor = true;
-            temp.Add(index);
+            temp.Add(grid);
             SearchColorArround(ctx, grid, temp);
         }
     }
+    #endregion
+
+    #region Search Falling
+    public static void UpdateFaling(GameContext ctx) {
+        var gridCom = ctx.game.gridCom;
+        gridCom.Foreach(grid => {
+            if (!grid.hasBubble || grid.index < GridConst.ScreenHorizontalCount) {
+                return;
+            }
+            // 预设为true
+            var temp = gridCom.searchTractionTemp;
+            temp.Clear();
+            temp.Add(grid);
+
+            grid.isNeedFalling = true;
+            grid.hasSearchTraction = true;
+            // 搜索周围
+            SearchArroundTraction(ctx, grid.index, grid, temp);
+            if (!grid.isNeedFalling) {
+                foreach (var gri in temp) {
+                    gri.hasSearchTraction = false;
+                }
+            } else {
+            }
+
+        });
+    }
+
+    public static void SearchArroundTraction(GameContext ctx, int index, GridEntity centerGrid, List<GridEntity> temp) {
+        var gridCom = ctx.game.gridCom;
+        bool isSingular = false;
+        int line = GetY(index);
+        if (line % 2 == 1) {
+            isSingular = true;
+        }
+        for (int j = -1; j <= 1; j++) {
+            if (j == 0) {
+                for (int i = -1; i <= 1; i++) {
+                    if (i == 0) {
+                        continue;
+                    }
+                    SearchTraction(ctx, index, centerGrid, i, j, temp);
+                    if (!centerGrid.isNeedFalling) {
+                        break;
+                    }
+                }
+            } else {
+                if (j == -1) {
+                }
+                if (isSingular) {
+                    for (int i = 0; i <= 1; i++) {
+                        SearchTraction(ctx, index, centerGrid, i, j, temp);
+                        if (!centerGrid.isNeedFalling) {
+                            break;
+                        }
+                    }
+                } else {
+                    for (int i = -1; i <= 0; i++) {
+                        SearchTraction(ctx, index, centerGrid, i, j, temp);
+                        if (!centerGrid.isNeedFalling) {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    public static void SearchTraction(GameContext ctx, int index, GridEntity centerGrid, int xOffset, int yOffset, List<GridEntity> temp) {
+        var gridCom = ctx.game.gridCom;
+        var horizontalCount = GridConst.ScreenHorizontalCount;
+        var VerticalCount = GridConst.ScreenVeticalCount;
+        int x = GetX(index) + xOffset;
+        int y = GetY(index) + yOffset;
+        if (x < 0 || x >= horizontalCount || y < 0 || y >= VerticalCount) {
+            return;
+        }
+        int newindex = GetIndex(x, y);
+        var newGrid = gridCom.GetGrid(newindex);
+        if (!newGrid.hasBubble || newGrid.hasSearchTraction) {
+            return;
+        }
+        if (y == 0) {
+            centerGrid.isNeedFalling = false;
+            return;
+        } else {
+            newGrid.hasSearchTraction = true;
+            temp.Add(newGrid);
+            // 搜索周围
+            SearchArroundTraction(ctx, newindex, centerGrid, temp);
+        }
+    }
+    #endregion
 }

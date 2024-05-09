@@ -75,7 +75,8 @@ public static class GameBusiness_Normal {
         GameGameDomain.UnspawnSameColorBubble(ctx);
 
         // 消除掉落泡泡
-
+        GridDomain.UpdateFaling(ctx);
+        GameGameDomain.UpspawnFallingBubble(ctx);
 
         Physics2D.Simulate(dt);
     }
@@ -86,14 +87,24 @@ public static class GameBusiness_Normal {
     }
 
     public static void LateTick(GameContext ctx, float dt) {
-        var readyBubble1 = ctx.shooter.readyBubble1;
-        var readyBubble2 = ctx.shooter.readyBubble2;
-        readyBubble1.MoveByEasing_Tick(dt);
-        readyBubble1.ChangePosEasing(dt, true);
-        readyBubble2.ChangePosEasing(dt, false);
+        // 发射器缓动
+        ShooterDomain.Easing_Tick(ctx, dt);
+
+        // All vfx
         for (int i = 0; i < ctx.vfxs.Count; i++) {
             var vfx = ctx.vfxs[i];
             VFXDomain.Tick(ctx, vfx, dt);
         }
+
+        // 下落缓动
+        int bubbleLen = ctx.bubbleRepo.TakeAll(out var allBubbles);
+        for (int i = 0; i < bubbleLen; i++) {
+            var bubble = allBubbles[i];
+            BubbleDomain.FallingEasing_Tick(bubble, dt);
+        }
+
+        ctx.game.gridCom.Foreach(grid => {
+            Debug.DrawLine(grid.worldPos, grid.worldPos + Vector2.down * 1, Color.red);
+        });
     }
 }

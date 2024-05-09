@@ -36,9 +36,8 @@ public static class BubbleDomain {
         bubble.RemoveRigidboday();
     }
 
-    // public static void SetPos(BubbleEntity bubble, Vector2 pos) {
-    //     if (bubble.fsmCom.status == BubbleStatus.Arrived) {
+    public static void FallingEasing_Tick(BubbleEntity bubble, float dt) {
+        bubble.FallingEasing_Tick(dt);
+    }
 
-    //     }
-    // }
 }

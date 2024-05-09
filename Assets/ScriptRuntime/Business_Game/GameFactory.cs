@@ -24,6 +24,7 @@ public static class GameFactory {
         ctx.asset.TryGet_Entity(typeof(BubbleEntity).Name, out var prefab);
         BubbleEntity bubble = GameObject.Instantiate(prefab).GetComponent<BubbleEntity>();
         bubble.typeId = typeId;
+        bubble.Ctor();
         bubble.colorType = tm.colorType;
         bubble.sr.sprite = tm.spr;
         bubble.moveSpeed = tm.moveSpeed;

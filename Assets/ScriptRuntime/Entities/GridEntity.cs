@@ -10,19 +10,24 @@ public class GridEntity {
     public ColorType colorType;
     public Vector2 worldPos;
     public Vector2Int viewPos;
-    public Vector3Int coordinatePos;
+    // public Vector3Int coordinatePos;
 
-    public bool inSingular;
     public bool hasSearchColor;
 
-    public void Ctor(int index) {
+    public bool isNeedFalling;
+    public bool hasSearchTraction;
+
+    public void Ctor(int index, Vector2Int viewPos) {
         this.index = index;
         hasSearchColor = false;
+        this.viewPos = viewPos;
+        isNeedFalling = false;
     }
 
     public void Reuse() {
         hasBubble = false;
         colorType = ColorType.None;
+        isNeedFalling = false;
     }
 
     public void SetHasBubble(ColorType colorType, int id) {
