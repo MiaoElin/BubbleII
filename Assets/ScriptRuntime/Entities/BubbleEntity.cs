@@ -102,6 +102,10 @@ public class BubbleEntity : MonoBehaviour {
         isDownEasing = true;
     }
 
+    public void EnterStatic() {
+        fsmCom.EnterStatic();
+    }
+
     public void DownEasing_Tick(float dt) {
         if (!isDownEasing) {
             return;
@@ -112,6 +116,7 @@ public class BubbleEntity : MonoBehaviour {
         } else {
             isDownEasing = false;
             down_timer = 0;
+            EnterStatic();
         }
     }
 

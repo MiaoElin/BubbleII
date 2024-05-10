@@ -70,7 +70,7 @@ public static class GridDomain {
             int index = i - (currentFirstIndex - GridConst.ScreenHorizontalCount);
             var typeId = gridTypes[i];
             var grid = gridCom.GetGrid(index);
-            if (grid.enable) {
+            if (grid.enable && typeId != 0) {
                 grid.typeId = typeId;
                 var bubble = BubbleDomain.SpawnStatic(ctx, typeId, grid.worldPos);
                 grid.SetHasBubble(bubble.colorType, bubble.id);

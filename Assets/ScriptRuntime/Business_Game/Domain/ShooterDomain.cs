@@ -49,7 +49,7 @@ public static class ShooterDomain {
 
     public static void ShootBubble(GameContext ctx) {
         ref var ShootingBubble = ref ctx.shooter.shootingBubble;
-        if (ShootingBubble && ShootingBubble.fsmCom.status == BubbleStatus.Shooting) {
+        if (ShootingBubble && ShootingBubble.fsmCom.status != BubbleStatus.Static) {
             return;
         }
         if (ctx.input.isMouseLeftDown && ctx.input.isMouseInGrid) {

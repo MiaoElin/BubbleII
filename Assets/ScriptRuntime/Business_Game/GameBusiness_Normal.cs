@@ -133,10 +133,10 @@ public static class GameBusiness_Normal {
         // 计分
         UIDomain.Panel_GameStatus_Tick(ctx);
 
-        ctx.game.gridCom.Foreach(grid => {
-            // if (grid.hasBubble) {
-            Debug.DrawLine(grid.worldPos, grid.worldPos + Vector2.down * 1, Color.red);
-            // }
-        });
+        // ctx.game.gridCom.Foreach(grid => {
+        //     if (grid.hasBubble) {
+        //     Debug.DrawLine(grid.worldPos, grid.worldPos + Vector2.down * 1, Color.red);
+        //     }
+        // });
     }
 }
