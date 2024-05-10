@@ -29,6 +29,7 @@ public class GridEntity {
         hasSearchColor = false;
         hasSearchTraction = false;
         hasBubble = false;
+        typeId = 0;
         colorType = ColorType.None;
         isNeedFalling = false;
     }

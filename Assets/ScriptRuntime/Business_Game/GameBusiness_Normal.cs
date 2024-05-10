@@ -80,8 +80,9 @@ public static class GameBusiness_Normal {
 
         if (ctx.shootCount <= 0 && ctx.shooter.shootingBubble.fsmCom.status == BubbleStatus.Static) {
             ctx.shootCount = 4;
-            ctx.game.gridCom.isSpawnNewLine = true;
-            if (ctx.game.stage.gridTypes.Count >0) {
+            // 生成一行新的
+            GridDomain.SpawnNewline(ctx);
+            if (ctx.game.stage.currentFirstIndex > 0) {
                 int bubbleLen = ctx.bubbleRepo.TakeAll(out var allBubbles);
                 for (int i = 0; i < bubbleLen; i++) {
                     var bubble = allBubbles[i];
@@ -93,6 +94,9 @@ public static class GameBusiness_Normal {
                     }
                 }
             }
+            // 下降重置格子
+            GridDomain.UpdateGrid(ctx);
+
         }
 
         Physics2D.Simulate(dt);
@@ -122,19 +126,17 @@ public static class GameBusiness_Normal {
                 BubbleDomain.FallingEasing_Tick(bubble, dt);
             } else if (bubble.fsmCom.status == BubbleStatus.Down) {
                 BubbleDomain.DownEasing_Tick(bubble, dt);
-                if (bubble.down_timer <= 0) {
-                    GridDomain.SpawnNewLine(ctx);
-                }
+                // GridDomain.SpawnNewLine(ctx);
             }
         }
 
         // 计分
         UIDomain.Panel_GameStatus_Tick(ctx);
 
-        // ctx.game.gridCom.Foreach(grid => {
-        //     if (grid.hasBubble) {
-        //         Debug.DrawLine(grid.worldPos, grid.worldPos + Vector2.down * 1, Color.red);
-        //     }
-        // });
+        ctx.game.gridCom.Foreach(grid => {
+            // if (grid.hasBubble) {
+            Debug.DrawLine(grid.worldPos, grid.worldPos + Vector2.down * 1, Color.red);
+            // }
+        });
     }
 }

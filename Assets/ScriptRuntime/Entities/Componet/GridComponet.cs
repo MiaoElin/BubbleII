@@ -9,16 +9,15 @@ public class GridComponet {
     public List<GridEntity> searchTractionTemp;
     public bool isSpawnNewLine;
 
-
-
     public GridComponet() {
 
     }
 
     public void Ctor() {
-        allGrid = new GridEntity[GridConst.ScreenGridCount];
+        allGrid = new GridEntity[GridConst.GridCount];
         searchColorTemp = new List<GridEntity>();
         searchTractionTemp = new List<GridEntity>();
+        isSpawnNewLine = true;
     }
 
     public GridEntity GetGrid(int index) {
@@ -46,7 +45,7 @@ public class GridComponet {
     public bool FindNearlyGrid(Vector2 pos, out GridEntity nearlyGrid) {
         nearlyGrid = null;
         float nearlyDistance = 16;
-        for (int i = 0; i < allGrid.Length; i++) {
+        for (int i = 15; i < allGrid.Length; i++) {
             var grid = allGrid[i];
             if (grid.hasBubble || !grid.enable) {
                 continue;

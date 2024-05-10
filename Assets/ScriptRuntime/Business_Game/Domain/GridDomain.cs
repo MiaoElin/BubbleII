@@ -13,7 +13,7 @@ public static class GridDomain {
         var gridTypes = stage.gridTypes;
         int firstgrid = gridTypes.Count - GridConst.ScreenGridCount;
         for (int i = firstgrid; i < gridTypes.Count; i++) {
-            int index = i - (firstgrid); // 第一个为0；
+            int index = i - (firstgrid) + GridConst.ScreenHorizontalCount; // 第一个为15；
             var grid = gridCom.GetGrid(index);
             grid.typeId = gridTypes[i];
         }
@@ -31,7 +31,7 @@ public static class GridDomain {
         float firstGridX1 = gridBottom.x - (2 * inRadius * (GridConst.ScreenHorizontalCount) / 2) + inRadius;
         float firstGridX2 = gridBottom.x - (2 * inRadius * (GridConst.ScreenHorizontalCount) / 2) + 2 * inRadius;
         // 生成格子
-        for (int i = 0; i < GridConst.ScreenGridCount; i++) {
+        for (int i = 0; i < GridConst.GridCount; i++) {
             var grid = new GridEntity();
             int x = GetX(i);
             int y = GetY(i);
@@ -56,6 +56,99 @@ public static class GridDomain {
             grid.worldPos.y = firstGridY - y * Mathf.Sqrt(3) * inRadius;
             gridCom.SetGrid(grid);
         }
+    }
+
+    public static void SpawnNewline(GameContext ctx) {
+        var gridCom = ctx.game.gridCom;
+        var stage = ctx.game.stage;
+        var gridTypes = stage.gridTypes;
+        ref var currentFirstIndex = ref stage.currentFirstIndex;
+        if (currentFirstIndex <= 0) {
+            return;
+        }
+        for (int i = currentFirstIndex - GridConst.ScreenHorizontalCount; i < currentFirstIndex; i++) {
+            int index = i - (currentFirstIndex - GridConst.ScreenHorizontalCount);
+            var typeId = gridTypes[i];
+            var grid = gridCom.GetGrid(index);
+            if (grid.enable) {
+                grid.typeId = typeId;
+                var bubble = BubbleDomain.SpawnStatic(ctx, typeId, grid.worldPos);
+                grid.SetHasBubble(bubble.colorType, bubble.id);
+            }
+        }
+
+    }
+
+
+    public static void UpdateGrid(GameContext ctx) {
+        var gridCom = ctx.game.gridCom;
+        var horizontalCount = GridConst.ScreenHorizontalCount;
+        var stage = ctx.game.stage;
+        var gridTypes = stage.gridTypes;
+        ref var currentFirstIndex = ref stage.currentFirstIndex;
+        if (currentFirstIndex <= 0) {
+            return;
+        }
+        // 移除stage里的
+        int minCount = gridTypes.Count - GridConst.ScreenHorizontalCount;
+
+        for (int i = gridTypes.Count - 1; i >= minCount; i--) {
+            gridTypes.RemoveAt(i);
+        }
+        currentFirstIndex -= GridConst.ScreenHorizontalCount;
+        Debug.Log(currentFirstIndex);
+
+
+        gridCom.Foreach_Reverse(grid => {
+            if (grid.index > 134) {
+                if (grid.hasBubble) {
+                    // todo 输了
+                }
+                return;
+            }
+            Debug.Log(grid.isinSingular);
+            int newindex = grid.index + horizontalCount;
+            var newGrid = gridCom.GetGrid(newindex);
+            ResetGrid(newGrid, grid);
+        });
+
+        // 修改第一排
+        gridCom.Foreach(grid => {
+            if (grid.index >= horizontalCount) {
+                return;
+            }
+            grid.Reuse();
+            ReverseGrid(grid);
+
+            if (grid.index == horizontalCount - 1) {
+                if (grid.isinSingular) {
+                    grid.enable = false;
+                } else {
+                    grid.enable = true;
+                }
+            }
+        });
+
+    }
+
+    public static void ResetGrid(GridEntity newGrid, GridEntity oldGrid) {
+        if (oldGrid.isinSingular) {
+            newGrid.isinSingular = true;
+            // 右移
+            newGrid.worldPos = newGrid.worldPos + Vector2.right * GridConst.GridInsideRadius;
+
+        } else {
+            newGrid.isinSingular = false;
+            newGrid.worldPos += Vector2.left * GridConst.GridInsideRadius;
+
+        }
+        newGrid.hasBubble = oldGrid.hasBubble;
+        newGrid.bubbleId = oldGrid.bubbleId;
+        newGrid.colorType = oldGrid.colorType;
+        newGrid.enable = oldGrid.enable;
+        newGrid.typeId = oldGrid.typeId;
+        newGrid.hasSearchColor = false;
+        newGrid.hasSearchTraction = false;
     }
 
     #region Search Color
@@ -129,7 +222,7 @@ public static class GridDomain {
     public static void UpdateFaling(GameContext ctx) {
         var gridCom = ctx.game.gridCom;
         gridCom.Foreach(grid => {
-            if (!grid.hasBubble || grid.index < GridConst.ScreenHorizontalCount) {
+            if (!grid.hasBubble || grid.index < GridConst.ScreenHorizontalCount * 2) {
                 return;
             }
             // 预设为true
@@ -206,7 +299,7 @@ public static class GridDomain {
         if (!newGrid.hasBubble || newGrid.hasSearchTraction) {
             return;
         }
-        if (y == 0) {
+        if (y == 1) {
             centerGrid.isNeedFalling = false;
             return;
         } else {
@@ -218,62 +311,62 @@ public static class GridDomain {
     }
     #endregion
 
-    public static void SpawnNewLine(GameContext ctx) {
-        var gridCom = ctx.game.gridCom;
-        if (!gridCom.isSpawnNewLine) {
-            return;
-        }
-        gridCom.isSpawnNewLine = false;
-        var gridTypes = ctx.game.stage.gridTypes;
-        int horizontalCount = GridConst.ScreenHorizontalCount;
-        if (gridTypes.Count - horizontalCount < 0) {
-            return;
-        }
+    // public static void SpawnNewLine(GameContext ctx) {
+    //     var gridCom = ctx.game.gridCom;
+    //     if (!gridCom.isSpawnNewLine) {
+    //         return;
+    //     }
+    //     gridCom.isSpawnNewLine = false;
+    //     var gridTypes = ctx.game.stage.gridTypes;
+    //     int horizontalCount = GridConst.ScreenHorizontalCount;
+    //     if (gridTypes.Count - horizontalCount < 0) {
+    //         return;
+    //     }
 
 
-        gridCom.Foreach_Reverse(grid => {
-            if (grid.index > 119) {
-                return;
-            }
-            int newGridIndex = grid.index + horizontalCount;
-            if (newGridIndex > GridConst.GridIndexMax) {
-                // 游戏输了 todo
-                return;
-            }
-            var newGrid = gridCom.GetGrid(newGridIndex);
-            ResetGrid(newGrid, grid);
-        });
+    //     gridCom.Foreach_Reverse(grid => {
+    //         if (grid.index > 119) {
+    //             return;
+    //         }
+    //         int newGridIndex = grid.index + horizontalCount;
+    //         if (newGridIndex > GridConst.GridIndexMax) {
+    //             // 游戏输了 todo
+    //             return;
+    //         }
+    //         var newGrid = gridCom.GetGrid(newGridIndex);
+    //         ResetGrid(newGrid, grid);
+    //     });
 
-        for (int i = gridTypes.Count - 1; i >= gridTypes.Count - horizontalCount; i--) {
-            var typeId = gridTypes[i];
-            // 第一个为0；随着i减小增d大
-            int index = (gridTypes.Count - 1) - i;
-            // 将0到horizontal个设置bubble
-            var grid = gridCom.GetGrid(index);
-            grid.Reuse();
-            ReverseGrid(grid);
-            grid.typeId = typeId;
+    //     for (int i = gridTypes.Count - 1; i >= gridTypes.Count - horizontalCount; i--) {
+    //         var typeId = gridTypes[i];
+    //         // 第一个为0；随着i减小增d大
+    //         int index = (gridTypes.Count - 1) - i;
+    //         // 将0到horizontal个设置bubble
+    //         var grid = gridCom.GetGrid(index);
+    //         grid.Reuse();
+    //         ReverseGrid(grid);
+    //         grid.typeId = typeId;
 
-            if (index == horizontalCount - 1) {
-                if (grid.isinSingular) {
-                    grid.enable = false;
-                } else {
-                    grid.enable = true;
-                }
-            }
-            if (grid.enable && grid.typeId != 0) {
-                var bubble = BubbleDomain.SpawnStatic(ctx, typeId, grid.worldPos);
-                grid.SetHasBubble(bubble.colorType, bubble.id);
-            }
-        }
+    //         if (index == horizontalCount - 1) {
+    //             if (grid.isinSingular) {
+    //                 grid.enable = false;
+    //             } else {
+    //                 grid.enable = true;
+    //             }
+    //         }
+    //         if (grid.enable && grid.typeId != 0) {
+    //             var bubble = BubbleDomain.SpawnStatic(ctx, typeId, grid.worldPos);
+    //             grid.SetHasBubble(bubble.colorType, bubble.id);
+    //         }
+    //     }
 
-        int minCount = gridTypes.Count - horizontalCount;
+    //     int minCount = gridTypes.Count - horizontalCount;
 
-        for (int i = gridTypes.Count - 1; i >= minCount; i--) {
-            gridTypes.RemoveAt(i);
-        }
+    //     for (int i = gridTypes.Count - 1; i >= minCount; i--) {
+    //         gridTypes.RemoveAt(i);
+    //     }
 
-    }
+    // }
 
     public static void ReverseGrid(GridEntity grid) {
         if (grid.isinSingular) {
@@ -285,25 +378,6 @@ public static class GridDomain {
         }
     }
 
-    public static void ResetGrid(GridEntity newGrid, GridEntity oldGrid) {
-        if (oldGrid.isinSingular) {
-            newGrid.isinSingular = true;
-            // 右移
-            newGrid.worldPos = newGrid.worldPos + Vector2.right * GridConst.GridInsideRadius;
-
-        } else {
-            newGrid.isinSingular = false;
-            newGrid.worldPos += Vector2.left * GridConst.GridInsideRadius;
-
-        }
-        newGrid.hasBubble = oldGrid.hasBubble;
-        newGrid.bubbleId = oldGrid.bubbleId;
-        newGrid.colorType = oldGrid.colorType;
-        newGrid.enable = oldGrid.enable;
-        newGrid.typeId = oldGrid.typeId;
-        newGrid.hasSearchColor = false;
-        newGrid.hasSearchTraction = false;
-    }
 
     public static int GetX(int index) {
         return index % GridConst.ScreenHorizontalCount;

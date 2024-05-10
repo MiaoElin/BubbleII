@@ -9,7 +9,13 @@ public class StageEntity {
     public int VerticalCount;
     // public int[] gridTypess;
     public List<int> gridTypes;
+
+    public int currentFirstIndex;
+
     public StageEntity() {
         gridTypes = new List<int>();
+    }
+    public void Ctor() {
+        currentFirstIndex = gridTypes.Count - GridConst.ScreenGridCount;
     }
 }
