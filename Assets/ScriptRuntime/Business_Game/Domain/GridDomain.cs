@@ -36,7 +36,7 @@ public static class GridDomain {
             int x = GetX(i);
             int y = GetY(i);
             grid.Ctor(i, new Vector2Int(x, y));
-            if (y % 2 == 1) {
+            if (y % 2 == 0) {
                 // 单行
                 grid.isinSingular = true;
                 grid.worldPos.x = firstGridX2 + 2 * x * inRadius;
