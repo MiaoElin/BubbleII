@@ -54,11 +54,14 @@ public static class GameBusiness_Normal {
 
     }
     public static void PreTick(GameContext ctx, float dt) {
+
         // 发射射线
         ShooterDomain.ShootLine(ctx);
+
         // 发射泡泡
         ShooterDomain.ShootBubble(ctx);
 
+        // ShootingBubble Fsm
         BubbleFsmDomain.ApplyFsm(ctx, ctx.shooter.shootingBubble, dt);
 
         // 消除同色的泡泡
@@ -81,12 +84,6 @@ public static class GameBusiness_Normal {
         // 发射器缓动
         ShooterDomain.Easing_Tick(ctx, dt);
 
-        // All vfx
-        for (int i = 0; i < ctx.vfxs.Count; i++) {
-            var vfx = ctx.vfxs[i];
-            VFXDomain.Tick(ctx, vfx, dt);
-        }
-
         // 下落缓动
         int bubbleLen = ctx.bubbleRepo.TakeAll(out var allBubbles);
         for (int i = 0; i < bubbleLen; i++) {
@@ -95,8 +92,13 @@ public static class GameBusiness_Normal {
                 BubbleDomain.FallingEasing_Tick(bubble, dt);
             } else if (bubble.fsmCom.status == BubbleStatus.Down) {
                 BubbleDomain.DownEasing_Tick(bubble, dt);
-                // GridDomain.SpawnNewLine(ctx);
             }
+        }
+
+        // All vfx
+        for (int i = 0; i < ctx.vfxs.Count; i++) {
+            var vfx = ctx.vfxs[i];
+            VFXDomain.Tick(ctx, vfx, dt);
         }
 
         // 计分

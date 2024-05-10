@@ -14,6 +14,6 @@ public class Panel_GameStatus : MonoBehaviour {
     }
 
     public void Tick(int score) {
-        score_txt.GetComponent<Text>().text = "Score:" + score.ToString();
+        score_txt.GetComponent<Text>().text = "Score:\r\n" + score.ToString();
     }
 }
