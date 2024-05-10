@@ -61,6 +61,9 @@ public static class GameBusiness_Normal {
         // 发射泡泡
         ShooterDomain.ShootBubble(ctx);
 
+        // 泡泡整体下降
+        GameGameDomain.BubbleDown(ctx);
+
         // ShootingBubble Fsm
         BubbleFsmDomain.ApplyFsm(ctx, ctx.shooter.shootingBubble, dt);
 

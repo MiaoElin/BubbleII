@@ -31,7 +31,7 @@ public class BubbleEntity : MonoBehaviour {
     public bool isDownEasing;
     public float down_timer;
     public float down_Duration;
-    public Vector2 downPos;
+    public Vector2 srPos;
 
     public BubbleEntity() {
         fsmCom = new BubbleFsmComponent();
@@ -112,7 +112,7 @@ public class BubbleEntity : MonoBehaviour {
         }
         down_timer += dt;
         if (down_timer <= down_Duration) {
-            sr.transform.position = GFEasing.Ease2D(GFEasingEnum.Linear, down_timer, down_Duration, downPos, GetPos());
+            sr.transform.position = GFEasing.Ease2D(GFEasingEnum.Linear, down_timer, down_Duration, srPos, GetPos());
         } else {
             isDownEasing = false;
             down_timer = 0;

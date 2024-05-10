@@ -55,6 +55,7 @@ public static class ShooterDomain {
         }
         if (ctx.input.isMouseLeftDown && ctx.input.isMouseInGrid) {
             ctx.shootCount--;
+            Debug.Log(ctx.shootCount);
             ref var readyBubble1 = ref ctx.shooter.readyBubble1;
             ref var readyBubble2 = ref ctx.shooter.readyBubble2;
             // 根据readybubble1生成bubble

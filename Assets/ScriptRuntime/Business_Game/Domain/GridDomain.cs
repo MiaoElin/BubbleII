@@ -80,7 +80,7 @@ public static class GridDomain {
     }
 
 
-    public static void UpdateGrid(GameContext ctx) {
+    public static void UpdateAllGrid(GameContext ctx) {
         var gridCom = ctx.game.gridCom;
         var horizontalCount = GridConst.ScreenHorizontalCount;
         var stage = ctx.game.stage;

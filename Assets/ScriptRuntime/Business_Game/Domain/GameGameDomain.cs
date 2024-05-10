@@ -62,4 +62,44 @@ public static class GameGameDomain {
             }
         });
     }
+
+    public static void BubbleDown(GameContext ctx) {
+        var shootingBubble = ctx.shooter.shootingBubble;
+        if (!shootingBubble) {
+            Down(ctx);
+            return;
+        }
+        var status = ctx.shooter.shootingBubble.fsmCom.status;
+        if (status == BubbleStatus.Static) {
+            Down(ctx);
+        }
+    }
+
+    public static void Down(GameContext ctx) {
+        if (ctx.shootCount > 0) {
+            return;
+        }
+        ctx.shootCount = 4;
+        // 生成一行新的
+        GridDomain.SpawnNewline(ctx);
+
+        // 遍历所有的泡泡,将不在Falling状态的泡泡都下移
+        if (ctx.game.stage.currentFirstIndex > 0) {
+            int bubbleLen = ctx.bubbleRepo.TakeAll(out var allBubbles);
+            for (int i = 0; i < bubbleLen; i++) {
+                var bubble = allBubbles[i];
+                if (bubble.fsmCom.status == BubbleStatus.Falling) {
+                    continue;
+                }
+                // 表现表现坐标，作为缓动起始
+                bubble.srPos = bubble.GetPos();
+                bubble.EnterDown();
+                // 逻辑坐标直接修改
+                float downOffset = Mathf.Sqrt(3) * GridConst.GridInsideRadius;
+                bubble.SetPos(bubble.GetPos() + Vector2.down * downOffset);
+            }
+        }
+        // 下降重置格子信息
+        GridDomain.UpdateAllGrid(ctx);
+    }
 }
