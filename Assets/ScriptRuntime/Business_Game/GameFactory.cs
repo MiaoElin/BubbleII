@@ -11,7 +11,7 @@ public static class GameFactory {
         stage.level = tm.level;
         stage.horizontalCount = tm.horizontalCount;
         stage.VerticalCount = tm.VerticalCount;
-        stage.gridTypes = tm.girdTypes;
+        stage.gridTypes.AddRange(tm.girdTypes);
         return stage;
     }
 

@@ -7,6 +7,7 @@ public class GridComponet {
     GridEntity[] allGrid;
     public List<GridEntity> searchColorTemp;
     public List<GridEntity> searchTractionTemp;
+    public bool isSpawnNewLine;
 
 
 

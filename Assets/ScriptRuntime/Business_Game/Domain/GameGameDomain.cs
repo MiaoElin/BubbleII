@@ -21,18 +21,22 @@ public static class GameGameDomain {
 
     public static void UnspawnSameColorBubble(GameContext ctx) {
         ctx.game.gridCom.Foreach(grid => {
-            if (!grid.hasBubble || !grid.hasSearchColor) {
+            if (!grid.hasBubble) {
                 return;
             }
-            bool has = ctx.bubbleRepo.TryGet(grid.bubbleId, out var bubble);
-            // 播放消除vfx
-            VFXDomain.VFXPlay(ctx, bubble);
-            // 加分
-            GameAddScore(ctx, bubble.score);
-            // 销毁bubble
-            BubbleDomain.Unspawn(ctx, bubble);
-            // 重置grid
-            grid.Reuse();
+
+            if (grid.hasSearchColor) {
+                bool has = ctx.bubbleRepo.TryGet(grid.bubbleId, out var bubble);
+                // 播放消除vfx
+                VFXDomain.VFXPlay(ctx, bubble);
+                // 加分
+                GameAddScore(ctx, bubble.score);
+                // 销毁bubble
+                BubbleDomain.Unspawn(ctx, bubble);
+                // 重置grid
+                grid.Reuse();
+            }
+
         });
     }
 

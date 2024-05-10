@@ -79,14 +79,18 @@ public static class GameBusiness_Normal {
         GameGameDomain.UpspawnFallingBubble(ctx);
 
         if (ctx.shootCount <= 0 && ctx.shooter.shootingBubble.fsmCom.status == BubbleStatus.Static) {
-            int bubbleLen = ctx.bubbleRepo.TakeAll(out var allBubbles);
-            for (int i = 0; i < bubbleLen; i++) {
-                var bubble = allBubbles[i];
-                if (bubble.fsmCom.status != BubbleStatus.Falling) {
-                    float downOffset = Mathf.Sqrt(3) * GridConst.GridInsideRadius;
-                    bubble.downPos = bubble.GetPos();
-                    bubble.SetPos(bubble.GetPos() + Vector2.down * downOffset);
-                    bubble.EnterDown();
+            ctx.shootCount = 4;
+            ctx.game.gridCom.isSpawnNewLine = true;
+            if (ctx.game.stage.gridTypes.Count >0) {
+                int bubbleLen = ctx.bubbleRepo.TakeAll(out var allBubbles);
+                for (int i = 0; i < bubbleLen; i++) {
+                    var bubble = allBubbles[i];
+                    if (bubble.fsmCom.status != BubbleStatus.Falling) {
+                        float downOffset = Mathf.Sqrt(3) * GridConst.GridInsideRadius;
+                        bubble.downPos = bubble.GetPos();
+                        bubble.SetPos(bubble.GetPos() + Vector2.down * downOffset);
+                        bubble.EnterDown();
+                    }
                 }
             }
         }
@@ -118,11 +122,19 @@ public static class GameBusiness_Normal {
                 BubbleDomain.FallingEasing_Tick(bubble, dt);
             } else if (bubble.fsmCom.status == BubbleStatus.Down) {
                 BubbleDomain.DownEasing_Tick(bubble, dt);
+                if (bubble.down_timer <= 0) {
+                    GridDomain.SpawnNewLine(ctx);
+                }
             }
-
         }
 
         // 计分
         UIDomain.Panel_GameStatus_Tick(ctx);
+
+        // ctx.game.gridCom.Foreach(grid => {
+        //     if (grid.hasBubble) {
+        //         Debug.DrawLine(grid.worldPos, grid.worldPos + Vector2.down * 1, Color.red);
+        //     }
+        // });
     }
 }

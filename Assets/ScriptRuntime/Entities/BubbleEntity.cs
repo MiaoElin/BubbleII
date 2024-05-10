@@ -43,7 +43,7 @@ public class BubbleEntity : MonoBehaviour {
         falling_Duration = 0.4f;
 
         down_timer = 0;
-        down_Duration = 0.2f;
+        down_Duration = 0.4f;
     }
 
     public void SetPos(Vector2 pos) {

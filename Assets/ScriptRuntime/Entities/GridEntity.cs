@@ -5,6 +5,7 @@ public class GridEntity {
     public int index;
     public int typeId;
     public bool enable;
+    public bool isinSingular;
     public bool hasBubble;
     public int bubbleId;
     public ColorType colorType;
@@ -25,6 +26,8 @@ public class GridEntity {
     }
 
     public void Reuse() {
+        hasSearchColor = false;
+        hasSearchTraction = false;
         hasBubble = false;
         colorType = ColorType.None;
         isNeedFalling = false;

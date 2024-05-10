@@ -9,4 +9,7 @@ public class StageEntity {
     public int VerticalCount;
     // public int[] gridTypess;
     public List<int> gridTypes;
+    public StageEntity() {
+        gridTypes = new List<int>();
+    }
 }

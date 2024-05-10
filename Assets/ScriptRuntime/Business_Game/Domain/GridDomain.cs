@@ -18,7 +18,7 @@ public static class GridDomain {
             grid.typeId = gridTypes[i];
         }
         for (int i = gridTypes.Count - 1; i >= firstgrid; i--) {
-            gridTypes.Remove(i);
+            gridTypes.RemoveAt(i);
         }
     }
 
@@ -38,7 +38,9 @@ public static class GridDomain {
             grid.Ctor(i, new Vector2Int(x, y));
             if (y % 2 == 1) {
                 // 单行
+                grid.isinSingular = true;
                 grid.worldPos.x = firstGridX2 + 2 * x * inRadius;
+                grid.worldPos.y = firstGridY - y * Mathf.Sqrt(3) * inRadius;
                 if (x == GridConst.ScreenHorizontalCount - 1) {
                     grid.enable = false;
                     gridCom.SetGrid(grid);
@@ -46,7 +48,9 @@ public static class GridDomain {
                 }
             } else {
                 // 双行
+                grid.isinSingular = false;
                 grid.worldPos.x = firstGridX1 + 2 * x * inRadius;
+                grid.worldPos.y = firstGridY - y * Mathf.Sqrt(3) * inRadius;
             }
             grid.enable = true;
             grid.worldPos.y = firstGridY - y * Mathf.Sqrt(3) * inRadius;
@@ -73,10 +77,10 @@ public static class GridDomain {
 
     public static void SearchColorArround(GameContext ctx, GridEntity grid, List<GridEntity> temp) {
         var line = GetY(grid.index);
-        bool isSingular = false;
-        if (line % 2 == 1) {
-            isSingular = true;
-        }
+        // bool isSingular = false;
+        // if (line % 2 == 1) {
+        //     isSingular = true;
+        // }
 
         for (int j = -1; j <= 1; j++) {
             if (j == 0) {
@@ -87,7 +91,7 @@ public static class GridDomain {
                     SearchColor(ctx, grid, i, j, temp);
                 }
             } else {
-                if (isSingular) {
+                if (grid.isinSingular) {
                     for (int i = 0; i <= 1; i++) {
                         SearchColor(ctx, grid, i, j, temp);
                     }
@@ -137,23 +141,25 @@ public static class GridDomain {
             grid.hasSearchTraction = true;
             // 搜索周围
             SearchArroundTraction(ctx, grid.index, grid, temp);
-            if (!grid.isNeedFalling) {
-                foreach (var gri in temp) {
-                    gri.hasSearchTraction = false;
-                }
-            } else {
+            foreach (var gri in temp) {
+                gri.hasSearchTraction = false;
             }
+            // if (!grid.isNeedFalling) {
+            // } else {
+
+            // }
 
         });
     }
 
     public static void SearchArroundTraction(GameContext ctx, int index, GridEntity centerGrid, List<GridEntity> temp) {
         var gridCom = ctx.game.gridCom;
-        bool isSingular = false;
-        int line = GetY(index);
-        if (line % 2 == 1) {
-            isSingular = true;
-        }
+        // bool isSingular = false;
+        // int line = GetY(index);
+        // if (line % 2 == 1) {
+        //     isSingular = true;
+        // }
+        var grid = gridCom.GetGrid(index);
         for (int j = -1; j <= 1; j++) {
             if (j == 0) {
                 for (int i = -1; i <= 1; i++) {
@@ -168,7 +174,7 @@ public static class GridDomain {
             } else {
                 if (j == -1) {
                 }
-                if (isSingular) {
+                if (grid.isinSingular) {
                     for (int i = 0; i <= 1; i++) {
                         SearchTraction(ctx, index, centerGrid, i, j, temp);
                         if (!centerGrid.isNeedFalling) {
@@ -214,10 +220,19 @@ public static class GridDomain {
 
     public static void SpawnNewLine(GameContext ctx) {
         var gridCom = ctx.game.gridCom;
+        if (!gridCom.isSpawnNewLine) {
+            return;
+        }
+        gridCom.isSpawnNewLine = false;
         var gridTypes = ctx.game.stage.gridTypes;
         int horizontalCount = GridConst.ScreenHorizontalCount;
+        if (gridTypes.Count - horizontalCount < 0) {
+            return;
+        }
+
+
         gridCom.Foreach_Reverse(grid => {
-            if (!grid.hasBubble) {
+            if (grid.index > 119) {
                 return;
             }
             int newGridIndex = grid.index + horizontalCount;
@@ -229,24 +244,67 @@ public static class GridDomain {
             ResetGrid(newGrid, grid);
         });
 
-        for (int i = gridTypes.Count - 1; i >= gridTypes.Count - 1 - horizontalCount; i--) {
+        for (int i = gridTypes.Count - 1; i >= gridTypes.Count - horizontalCount; i--) {
             var typeId = gridTypes[i];
             // 第一个为0；随着i减小增d大
             int index = (gridTypes.Count - 1) - i;
             // 将0到horizontal个设置bubble
             var grid = gridCom.GetGrid(index);
+            grid.Reuse();
+            ReverseGrid(grid);
             grid.typeId = typeId;
+
+            if (index == horizontalCount - 1) {
+                if (grid.isinSingular) {
+                    grid.enable = false;
+                } else {
+                    grid.enable = true;
+                }
+            }
+            if (grid.enable && grid.typeId != 0) {
+                var bubble = BubbleDomain.SpawnStatic(ctx, typeId, grid.worldPos);
+                grid.SetHasBubble(bubble.colorType, bubble.id);
+            }
         }
 
+        int minCount = gridTypes.Count - horizontalCount;
+
+        for (int i = gridTypes.Count - 1; i >= minCount; i--) {
+            gridTypes.RemoveAt(i);
+        }
 
     }
+
+    public static void ReverseGrid(GridEntity grid) {
+        if (grid.isinSingular) {
+            grid.isinSingular = false;
+            grid.worldPos += Vector2.left * GridConst.GridInsideRadius;
+        } else {
+            grid.isinSingular = true;
+            grid.worldPos += Vector2.right * GridConst.GridInsideRadius;
+        }
+    }
+
     public static void ResetGrid(GridEntity newGrid, GridEntity oldGrid) {
-        newGrid.hasBubble = true;
+        if (oldGrid.isinSingular) {
+            newGrid.isinSingular = true;
+            // 右移
+            newGrid.worldPos = newGrid.worldPos + Vector2.right * GridConst.GridInsideRadius;
+
+        } else {
+            newGrid.isinSingular = false;
+            newGrid.worldPos += Vector2.left * GridConst.GridInsideRadius;
+
+        }
+        newGrid.hasBubble = oldGrid.hasBubble;
         newGrid.bubbleId = oldGrid.bubbleId;
         newGrid.colorType = oldGrid.colorType;
         newGrid.enable = oldGrid.enable;
         newGrid.typeId = oldGrid.typeId;
+        newGrid.hasSearchColor = false;
+        newGrid.hasSearchTraction = false;
     }
+
     public static int GetX(int index) {
         return index % GridConst.ScreenHorizontalCount;
     }
