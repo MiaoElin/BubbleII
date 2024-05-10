@@ -56,20 +56,10 @@ public static class GameBusiness_Normal {
     public static void PreTick(GameContext ctx, float dt) {
         // 发射射线
         ShooterDomain.ShootLine(ctx);
-
-        // 发射bubble
+        // 发射泡泡
         ShooterDomain.ShootBubble(ctx);
 
-        // 移动ShootingBubble
-        var shootingBubble = ctx.shooter.shootingBubble;
-        if (shootingBubble) {
-            var fsmCom = ctx.shooter.shootingBubble.fsmCom;
-            if (fsmCom.status == BubbleStatus.Shooting) {
-                BubbleDomain.Move(shootingBubble);
-            } else if (fsmCom.status == BubbleStatus.Arrived) {
-                GameGameDomain.SetBubblePos_InGrid(ctx, shootingBubble);
-            }
-        }
+        BubbleFsmDomain.ApplyFsm(ctx, ctx.shooter.shootingBubble, dt);
 
         // 消除同色的泡泡
         GameGameDomain.UnspawnSameColorBubble(ctx);
@@ -77,27 +67,6 @@ public static class GameBusiness_Normal {
         // 消除掉落泡泡
         GridDomain.UpdateFaling(ctx);
         GameGameDomain.UpspawnFallingBubble(ctx);
-
-        if (ctx.shootCount <= 0 && ctx.shooter.shootingBubble.fsmCom.status == BubbleStatus.Static) {
-            ctx.shootCount = 4;
-            // 生成一行新的
-            GridDomain.SpawnNewline(ctx);
-            if (ctx.game.stage.currentFirstIndex > 0) {
-                int bubbleLen = ctx.bubbleRepo.TakeAll(out var allBubbles);
-                for (int i = 0; i < bubbleLen; i++) {
-                    var bubble = allBubbles[i];
-                    if (bubble.fsmCom.status != BubbleStatus.Falling) {
-                        float downOffset = Mathf.Sqrt(3) * GridConst.GridInsideRadius;
-                        bubble.downPos = bubble.GetPos();
-                        bubble.SetPos(bubble.GetPos() + Vector2.down * downOffset);
-                        bubble.EnterDown();
-                    }
-                }
-            }
-            // 下降重置格子
-            GridDomain.UpdateGrid(ctx);
-
-        }
 
         Physics2D.Simulate(dt);
     }

@@ -21,7 +21,6 @@ public static class BubbleDomain {
     }
 
     public static void Move(BubbleEntity bubble) {
-        // if (bubble.fsmCom.status == BubbleStatus.Shooting) {
         if (bubble.isReflect) {
             bubble.isReflect = false;
             bubble.faceDir = bubble.reflectDir;
@@ -29,7 +28,6 @@ public static class BubbleDomain {
         } else {
             bubble.Move();
         }
-        // }
     }
 
     public static void SetStatic(BubbleEntity bubble) {
