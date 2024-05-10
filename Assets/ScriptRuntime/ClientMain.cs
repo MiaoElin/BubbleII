@@ -25,18 +25,24 @@ public class ClientMain : MonoBehaviour {
     private void EventBind() {
         var uiEevntCenter = ctx.uiApp.uIEventCenter;
         uiEevntCenter.OnStartClickHandle = () => {
+            // sfx
+            ctx.soundCore.BtnClick(ctx.asset.configTM.sfx_click);
+            // 打开ui
             UIDomain.Panel_Login_Close(ctx);
             GameBusiness_Normal.Enter(ctx);
         };
 
         uiEevntCenter.OnChangeClickHanle = () => {
             ShooterDomain.ChangeReadyBubble(ctx);
+            // sfx
+            ctx.soundCore.BtnClick(ctx.asset.configTM.sfx_click);
         };
     }
 
     private void Load() {
         ctx.uiApp.LoadAll();
         ctx.asset.LoadAll();
+        ctx.soundCore.LoadAll();
     }
 
     void Update() {
@@ -70,5 +76,6 @@ public class ClientMain : MonoBehaviour {
     private void UnLoad() {
         ctx.uiApp.UnLoad();
         ctx.asset.Unload();
+        ctx.soundCore.Unload();
     }
 }

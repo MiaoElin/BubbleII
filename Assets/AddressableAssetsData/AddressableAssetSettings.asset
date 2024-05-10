@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 1f766cb8960389f46bcfa869999eeadb
   m_currentHash:
     serializedVersion: 2
-    Hash: 844402cd4112ca6f482819b24ca301ed
+    Hash: bcb02a643d9d0bcfa17b955907be59a1
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -92,6 +92,8 @@ MonoBehaviour:
     - BubbleTM
     - Entities
     - FakeBubbleTM
+    - ConfigTM
+    - AudioSource
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 4c22c672f984eaf4f95fad5a4ccb36bc, type: 2}

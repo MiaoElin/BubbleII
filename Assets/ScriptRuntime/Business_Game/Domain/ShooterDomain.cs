@@ -13,12 +13,13 @@ public static class ShooterDomain {
         shooter.SetLinREnable(true);
         shooter.SetlineColor(readyBubble1.color);
         readyBubble1.faceDir = ctx.input.mouseWorldPos - VectorConst.ShooterPos;
+        var shootPos = VectorConst.ShooterPos + Vector2.up * 1.2f;
         LayerMask layerTop = 1 << 7; // top;
         LayerMask layerSide = 1 << 6;
         LayerMask layerBubble = 1 << 8;
-        var hitTop1 = Physics2D.Raycast(VectorConst.ShooterPos, readyBubble1.faceDir, 100f, layerTop);
-        var hitSide = Physics2D.Raycast(VectorConst.ShooterPos, readyBubble1.faceDir, 100f, layerSide);
-        var hitBubble1 = Physics2D.Raycast(VectorConst.ShooterPos, readyBubble1.faceDir, 100f, layerBubble);
+        var hitTop1 = Physics2D.Raycast(shootPos, readyBubble1.faceDir, 100f, layerTop);
+        var hitSide = Physics2D.Raycast(shootPos, readyBubble1.faceDir, 100f, layerSide);
+        var hitBubble1 = Physics2D.Raycast(shootPos, readyBubble1.faceDir, 100f, layerBubble);
 
         if (hitBubble1) {
             readyBubble1.landingPos = hitBubble1.point;
@@ -73,6 +74,9 @@ public static class ShooterDomain {
             // 生成新的 readyBubble2
             readyBubble2 = FakeBubbleDomain.Spawn(ctx, UnityEngine.Random.Range(1, 5), VectorConst.ReadyPos, VectorConst.scalehalf);
             readyBubble2.GetComponentInChildren<SpriteRenderer>().sortingOrder = 99;
+
+            // 播放sfx
+            ctx.soundCore.BubbleShootPlay(ctx.asset.configTM.sfx_BubbleBroke);
         }
     }
 

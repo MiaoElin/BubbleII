@@ -10,7 +10,7 @@ public class ShooterEntity : MonoBehaviour {
     [SerializeField] LineRenderer lineR;
 
     public ShooterEntity() {
-        shooterPos = VectorConst.ShooterPos;
+        shooterPos = VectorConst.ShooterPos + Vector2.up * 1.2f;
     }
 
     public void SetLinREnable(bool b) {
@@ -24,14 +24,14 @@ public class ShooterEntity : MonoBehaviour {
 
     public void SetLinePos(Vector2 point1, Vector2 point2) {
         lineR.positionCount = 3;
-        lineR.SetPosition(0, VectorConst.ShooterPos);
+        lineR.SetPosition(0, shooterPos);
         lineR.SetPosition(1, point1);
         lineR.SetPosition(2, point2);
     }
 
     public void SetLinePos(Vector2 point1) {
         lineR.positionCount = 2;
-        lineR.SetPosition(0, VectorConst.ShooterPos);
+        lineR.SetPosition(0, shooterPos);
         lineR.SetPosition(1, point1);
     }
 }

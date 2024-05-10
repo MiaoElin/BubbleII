@@ -7,11 +7,14 @@ public class BubbleFsmComponent {
     public bool isShooting;
     public bool isArraived;
     public bool isStatic;
+    public bool isFalling;
+    public bool isDowing;
 
 
 
     public void EnterFalling() {
         status = BubbleStatus.Falling;
+        isFalling = true;
     }
 
     public void EnterShooting() {
@@ -29,7 +32,8 @@ public class BubbleFsmComponent {
         isStatic = true;
     }
 
-    public void EnterDown(){
-        status=BubbleStatus.Down;
+    public void EnterDown() {
+        status = BubbleStatus.Down;
+        isDowing = true;
     }
 }

@@ -19,6 +19,7 @@ public class GameContext {
 
     // === Core ===
     public Asset_Core asset;
+    public SoundCore soundCore;
 
     public IDService iDService;
 
@@ -38,6 +39,7 @@ public class GameContext {
         gameFsmCom = new GameFSMComponet();
 
         asset = new Asset_Core();
+        soundCore = new SoundCore();
 
         bubbleRepo = new BubbleRepo();
         iDService = new IDService();

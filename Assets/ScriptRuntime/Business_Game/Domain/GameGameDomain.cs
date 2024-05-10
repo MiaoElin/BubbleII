@@ -27,14 +27,14 @@ public static class GameGameDomain {
 
             if (grid.hasSearchColor) {
                 bool has = ctx.bubbleRepo.TryGet(grid.bubbleId, out var bubble);
-                // 播放消除vfx
-                VFXDomain.VFXPlay(ctx, bubble);
                 // 加分
                 GameAddScore(ctx, bubble.score);
                 // 销毁bubble
                 BubbleDomain.Unspawn(ctx, bubble);
                 // 重置grid
                 grid.Reuse();
+                // 播放消除vfx
+                VFXDomain.VFXPlay(ctx, bubble);
             }
 
         });
@@ -55,7 +55,7 @@ public static class GameGameDomain {
                 bubble.fsmCom.EnterFalling();
                 bubble.fallingPos = bubble.GetPos();
                 bubble.isFallingEasing = true;
-                // jiafe
+                // 加分
                 GameAddScore(ctx, bubble.score);
                 // 重置grid
                 grid.Reuse();

@@ -17,8 +17,8 @@ public class VFXEntity : MonoBehaviour {
 
     public void Tick(float dt) {
         timer += dt;
-        if (timer >= GameConst.ANIMATOR_INTERVAL) {
-            timer -= GameConst.ANIMATOR_INTERVAL;
+        if (timer >= CommonConst.ANIMATOR_INTERVAL) {
+            timer -= CommonConst.ANIMATOR_INTERVAL;
             currentIndex++;
             if (currentIndex >= allsprite.Length) {
                 isEnd = true;

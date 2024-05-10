@@ -11,6 +11,7 @@ public static class BubbleDomain {
     public static BubbleEntity SpawnStatic(GameContext ctx, int typeId, Vector2 pos) {
         var bubble = Spawn(ctx, typeId, pos);
         bubble.RemoveRigidboday();
+        bubble.EnterStatic();
         return bubble;
     }
 

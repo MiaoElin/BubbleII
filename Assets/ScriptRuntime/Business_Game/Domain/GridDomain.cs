@@ -96,7 +96,6 @@ public static class GridDomain {
             gridTypes.RemoveAt(i);
         }
         currentFirstIndex -= GridConst.ScreenHorizontalCount;
-        Debug.Log(currentFirstIndex);
 
 
         gridCom.Foreach_Reverse(grid => {
@@ -106,7 +105,6 @@ public static class GridDomain {
                 }
                 return;
             }
-            Debug.Log(grid.isinSingular);
             int newindex = grid.index + horizontalCount;
             var newGrid = gridCom.GetGrid(newindex);
             ResetGrid(newGrid, grid);

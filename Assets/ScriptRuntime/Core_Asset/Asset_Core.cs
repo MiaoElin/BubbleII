@@ -17,6 +17,9 @@ public class Asset_Core {
     Dictionary<int, FakeBubbleTM> fakeBubbleTMs;
     public AsyncOperationHandle fakeBubblePtr;
 
+    public ConfigTM configTM;
+    public AsyncOperationHandle configPtr;
+
     public Asset_Core() {
         allStageTMs = new Dictionary<int, StageTM>();
         bubbleTMs = new Dictionary<int, BubbleTM>();
@@ -57,6 +60,12 @@ public class Asset_Core {
                 fakeBubbleTMs.Add(tm.typeId, tm);
             }
         }
+        {
+            var ptr = Addressables.LoadAssetAsync<ConfigTM>("ConfigTM");
+            configPtr = ptr;
+            var tm = ptr.WaitForCompletion();
+            configTM = tm;
+        }
     }
 
     public void Unload() {
@@ -71,6 +80,9 @@ public class Asset_Core {
         }
         if (fakeBubblePtr.IsValid()) {
             Addressables.Release(fakeBubblePtr);
+        }
+        if (configPtr.IsValid()) {
+            Addressables.Release(configPtr);
         }
     }
 
