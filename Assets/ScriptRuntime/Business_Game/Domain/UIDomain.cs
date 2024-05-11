@@ -17,4 +17,8 @@ public static class UIDomain {
     public static void Panel_GameStatus_Tick(GameContext ctx) {
         ctx.uiApp.Panel_GameStatus_Tick(ctx.game.score);
     }
+
+    public static void Panel_Win_Open(GameContext ctx) {
+        ctx.uiApp.Panel_Win_Open(ctx.game.stage.level, ctx.game.score);
+    }
 }

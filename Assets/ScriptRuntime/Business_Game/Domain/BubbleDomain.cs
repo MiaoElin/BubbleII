@@ -20,10 +20,11 @@ public static class BubbleDomain {
         GameObject.Destroy(bubble.gameObject);
     }
 
-    public static void Move(BubbleEntity bubble) {
+    public static void Move(BubbleEntity bubble, float dt) {
         if (bubble.isReflect) {
             bubble.isReflect = false;
             bubble.faceDir = bubble.reflectDir;
+            bubble.transform.position += (Vector3)Vector2.up * GridConst.GridInsideRadius;
             bubble.Move();
         } else {
             bubble.Move();

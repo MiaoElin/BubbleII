@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   typeId: 0
+  score: 0
   colorType: 0
   sr: {fileID: 1493971794776196482}
   rb: {fileID: -7191261984752931403}
@@ -57,6 +58,15 @@ MonoBehaviour:
   isReflect: 0
   reflectDir: {x: 0, y: 0}
   landingPos: {x: 0, y: 0}
+  isFallingEasing: 0
+  falling_timer: 0
+  falling_MounDuration: 0
+  falling_Duration: 0
+  fallingPos: {x: 0, y: 0}
+  isDownEasing: 0
+  down_timer: 0
+  down_Duration: 0
+  srPos: {x: 0, y: 0}
 --- !u!50 &-7191261984752931403
 Rigidbody2D:
   serializedVersion: 4

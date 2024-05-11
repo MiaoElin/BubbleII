@@ -131,6 +131,18 @@ MonoBehaviour:
     m_SerializedLabels:
     - AudioSource
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d2d397f11f827af4f95ec4b9e27634e6
+    m_Address: Assets/ResourceRuntime/Panel/Panel_Win.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 72216ee4fd460374daccca336ee1bb1f
+    m_Address: Assets/ResourceRuntime/Panel/LOSE/Panel_Lose.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3a44712dd1f75fd49aece42f23c0b5d4, type: 2}
   m_SchemaSet:

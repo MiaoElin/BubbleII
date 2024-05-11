@@ -39,14 +39,15 @@ public static class GameBusiness_Normal {
         PreTick(ctx, dt);
 
         ref var restSec = ref ctx.restSec;
-        const float Interval = 0.01f;
-        if (restSec < Interval) {
+        const float IntervalTime = 0.01f;
+        restSec += dt;
+        if (restSec < IntervalTime) {
             FixedTick(ctx, restSec);
             restSec = 0;
         } else {
-            while (restSec >= Interval) {
-                restSec -= Interval;
-                FixedTick(ctx, Interval);
+            while (restSec >= IntervalTime) {
+                restSec -= IntervalTime;
+                FixedTick(ctx, IntervalTime);
             }
         }
 
@@ -54,6 +55,16 @@ public static class GameBusiness_Normal {
 
     }
     public static void PreTick(GameContext ctx, float dt) {
+
+    }
+
+    public static void ApplyResult(GameContext ctx) {
+        // var game = ctx.game;
+        // if (game.score >= game.stage.targetCore) {
+        //     ctx.gameFsmCom.EnterResult(true);
+        // }
+    }
+    public static void FixedTick(GameContext ctx, float dt) {
 
         // 发射射线
         ShooterDomain.ShootLine(ctx);
@@ -75,11 +86,6 @@ public static class GameBusiness_Normal {
         GameGameDomain.UpspawnFallingBubble(ctx);
 
         Physics2D.Simulate(dt);
-    }
-
-
-    public static void FixedTick(GameContext ctx, float fixdt) {
-
 
     }
 
@@ -106,6 +112,8 @@ public static class GameBusiness_Normal {
 
         // 计分
         UIDomain.Panel_GameStatus_Tick(ctx);
+        // 结果结算 
+        ApplyResult(ctx);
 
         // ctx.game.gridCom.Foreach(grid => {
         //     if (grid.hasBubble) {

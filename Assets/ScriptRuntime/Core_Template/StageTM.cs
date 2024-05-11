@@ -7,6 +7,9 @@ public class StageTM : ScriptableObject {
     public int level;
     public int horizontalCount;
     public int VerticalCount;
+    public int targetCore;
+
     // public int[] girdTypess;
     public List<int> gridTypes;
+
 }

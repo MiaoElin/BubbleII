@@ -11,6 +11,7 @@ public class StageEntity {
     public List<int> gridTypes;
 
     public int currentFirstIndex;
+    public int targetCore;
 
     public StageEntity() {
         gridTypes = new List<int>();

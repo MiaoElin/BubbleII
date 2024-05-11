@@ -69,10 +69,10 @@ public class BubbleEntity : MonoBehaviour {
             isReflect = true;
         }
         if (other.gameObject.tag == "TopCollision") {
-            fsmCom.EnterArrived();
+            // EnterArrived();
         }
         if (other.gameObject.tag == "BubbleEntity") {
-            fsmCom.EnterArrived();
+            // EnterArrived();
         }
     }
 
@@ -104,6 +104,10 @@ public class BubbleEntity : MonoBehaviour {
 
     public void EnterStatic() {
         fsmCom.EnterStatic();
+    }
+
+    public void EnterArrived() {
+        fsmCom.EnterArrived();
     }
 
     public void DownEasing_Tick(float dt) {

@@ -48,4 +48,20 @@ public class UIApp {
         PanelGameStatusDomain.Tick(ctx, score);
     }
 
+    public void Panel_Win_Open(int stageLevel, int score) {
+        var panel = ctx.TryGet_UI<Panel_Win>();
+        if (panel == null) {
+            ctx.TryGet_UI_Prefab(typeof(Panel_Win).Name, out var prefab);
+            panel = GameObject.Instantiate(prefab, ctx.screenCanvas.transform).GetComponent<Panel_Win>();
+            panel.Ctor();
+            ctx.Add_UI(typeof(Panel_Win).Name, panel.gameObject);
+        }
+        panel.Init(stageLevel, score);
+    }
+
+    public void Panel_Win_Hide() {
+        var paenl = ctx.TryGet_UI<Panel_Win>();
+        paenl?.Hide();
+    }
+
 }

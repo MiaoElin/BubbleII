@@ -12,6 +12,7 @@ public static class GameFactory {
         stage.horizontalCount = tm.horizontalCount;
         stage.VerticalCount = tm.VerticalCount;
         stage.gridTypes.AddRange(tm.gridTypes);
+        stage.targetCore = tm.targetCore;
         // stage.currentFirstIndex = tm.gridTypes.Count - GridConst.ScreenGridCount;
         stage.Ctor();
         return stage;

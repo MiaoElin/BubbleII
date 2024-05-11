@@ -9,7 +9,7 @@ public static class BubbleFsmDomain {
         }
         var status = shootingBubble.fsmCom.status;
         if (status == BubbleStatus.Shooting) {
-            BubbleDomain.Move(shootingBubble);
+            BubbleDomain.Move(shootingBubble,dt);
         } else if (status == BubbleStatus.Arrived) {
             GameGameDomain.SetBubblePos_InGrid(ctx, shootingBubble);
         }

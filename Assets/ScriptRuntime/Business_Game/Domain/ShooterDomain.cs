@@ -13,7 +13,7 @@ public static class ShooterDomain {
         shooter.SetLinREnable(true);
         shooter.SetlineColor(readyBubble1.color);
         readyBubble1.faceDir = ctx.input.mouseWorldPos - VectorConst.ShooterPos;
-        var shootPos = VectorConst.ShooterPos + Vector2.up * 1.2f;
+        var shootPos = VectorConst.ShooterPos;
         LayerMask layerTop = 1 << 7; // top;
         LayerMask layerSide = 1 << 6;
         LayerMask layerBubble = 1 << 8;
@@ -38,12 +38,18 @@ public static class ShooterDomain {
 
             var hitTop2 = Physics2D.Raycast(hitSide.point, reflectDir, 100f, layerTop);
             var hitBubble2 = Physics2D.Raycast(hitSide.point, reflectDir, 100f, layerBubble);
+            var hitSide2 = Physics2D.Raycast(hitSide.point, reflectDir, 100f, layerSide);
             if (hitBubble2) {
                 readyBubble1.landingPos = hitBubble2.point;
                 shooter.SetLinePos(hitSide.point, hitBubble2.point);
             } else if (hitTop2) {
                 readyBubble1.landingPos = hitTop2.point;
                 shooter.SetLinePos(hitSide.point, hitTop2.point);
+            } else if (hitSide2) {
+                // Debug.Log("hit2" + hitSide2.point);
+                // Debug.DrawRay(hitSide.point, reflectDir * 5f, Color.red);
+                // readyBubble1.landingPos = hitSide2.point;
+                // shooter.SetLinePos(hitSide.point, hitSide2.point);
             }
         }
     }

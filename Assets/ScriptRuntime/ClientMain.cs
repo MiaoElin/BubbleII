@@ -47,12 +47,23 @@ public class ClientMain : MonoBehaviour {
 
     void Update() {
         float dt = Time.deltaTime;
+        // var point = new Vector2(-15, -6);
+        // Debug.Log(Camera.main.WorldToScreenPoint(point));
+
+        // var point2 = new Vector2(160, 168);
+        // Debug.Log((Vector2)Camera.main.ScreenToWorldPoint(point2));
+
+        // var point3 = new Vector3(160, 168, 10);
+        // Debug.Log(Camera.main.ScreenToWorldPoint(point3));
+
         ctx.input.Process();
         var status = ctx.gameFsmCom.status;
         if (status == GameStatus.Login) {
             GameBusiness_Login.Tick();
         } else if (status == GameStatus.Normal) {
             GameBusiness_Normal.Tick(ctx, dt);
+        } else if (status == GameStatus.Result) {
+            GameBusiness_Result.Tick(ctx, dt);
         }
     }
 
