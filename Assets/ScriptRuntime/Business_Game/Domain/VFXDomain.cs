@@ -16,6 +16,14 @@ public static class VFXDomain {
         }
     }
 
+    public static void BubbleBroke(GameContext ctx, Vector2 pos) {
+        Play(ctx, ctx.asset.configTM.vfx_BubbleBroke, pos);
+    }
+
+    public static void WinPlay(GameContext ctx) {
+        Play(ctx, ctx.asset.configTM.vfx_Win, new Vector2(0, 0));
+    }
+
     public static void Unspawn(GameContext ctx, VFXEntity vfx) {
         ctx.vfxs.Remove(vfx);
         GameObject.Destroy(vfx.gameObject);

@@ -83,7 +83,7 @@ public static class ShooterDomain {
             readyBubble2.GetComponentInChildren<SpriteRenderer>().sortingOrder = 99;
 
             // 播放sfx
-            ctx.soundCore.BubbleShootPlay(ctx.asset.configTM.sfx_BubbleBroke);
+            SFXDomain.BubbleShoot(ctx);
         }
     }
 

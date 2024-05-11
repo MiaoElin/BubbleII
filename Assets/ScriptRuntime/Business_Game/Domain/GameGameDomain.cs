@@ -34,7 +34,7 @@ public static class GameGameDomain {
                 // 重置grid
                 grid.Reuse();
                 // 播放消除vfx
-                VFXDomain.Play(ctx, ctx.asset.configTM.vfx_BubbleBroke, bubble.GetPos());
+                VFXDomain.BubbleBroke(ctx, bubble.GetPos());
             }
 
         });

@@ -3,12 +3,13 @@ using UnityEngine.Audio;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 public class SoundCore {
-
+    public AudioSource prefab;
     public AudioSource bgmPlayer;
     public AudioSource bubbleBreak;
     public AudioSource bubbleShoot;
     public AudioSource btnClick;
-    public AudioSource prefab;
+    public AudioSource winPlayer;
+
     public AsyncOperationHandle prefabHandle;
 
 
@@ -22,6 +23,7 @@ public class SoundCore {
         bubbleBreak = GameObject.Instantiate(prefab, sfx.transform);
         bubbleShoot = GameObject.Instantiate(prefab, sfx.transform);
         btnClick = GameObject.Instantiate(prefab, sfx.transform);
+        winPlayer = GameObject.Instantiate(prefab, sfx.transform);
     }
 
     public void Unload() {
@@ -49,6 +51,13 @@ public class SoundCore {
         if (!btnClick.isPlaying) {
             btnClick.clip = clip;
             btnClick.Play();
+        }
+    }
+
+    public void WinPlay(AudioClip clip) {
+        if (!winPlayer.isPlaying) {
+            winPlayer.clip = clip;
+            winPlayer.Play();
         }
     }
 }

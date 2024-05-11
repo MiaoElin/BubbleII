@@ -26,7 +26,7 @@ public class ClientMain : MonoBehaviour {
         var uiEevntCenter = ctx.uiApp.uIEventCenter;
         uiEevntCenter.OnStartClickHandle = () => {
             // sfx
-            ctx.soundCore.BtnClick(ctx.asset.configTM.sfx_click);
+            SFXDomain.BtnClick(ctx);
             // 打开ui
             UIDomain.Panel_Login_Close(ctx);
             GameBusiness_Normal.Enter(ctx);
@@ -35,7 +35,7 @@ public class ClientMain : MonoBehaviour {
         uiEevntCenter.OnChangeClickHanle = () => {
             ShooterDomain.ChangeReadyBubble(ctx);
             // sfx
-            ctx.soundCore.BtnClick(ctx.asset.configTM.sfx_click);
+            SFXDomain.BtnClick(ctx);
         };
     }
 

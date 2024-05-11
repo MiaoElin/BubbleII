@@ -19,7 +19,9 @@ public static class GameBusiness_Result {
                 UIDomain.Panel_Win_Hide(ctx);
                 panel.isPanelEasingIn = true;
                 // 播放胜利特效
-                VFXDomain.Play(ctx, ctx.asset.configTM.vfx_Win, new Vector2(0, 0));
+                VFXDomain.WinPlay(ctx);
+                // sfx
+                SFXDomain.WinPlay(ctx);
             }
 
         }
