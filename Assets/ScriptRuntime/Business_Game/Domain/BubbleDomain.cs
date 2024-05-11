@@ -24,10 +24,12 @@ public static class BubbleDomain {
         if (bubble.isReflect) {
             bubble.isReflect = false;
             bubble.faceDir = bubble.reflectDir;
-            bubble.transform.position += (Vector3)Vector2.up * GridConst.GridInsideRadius;
-            bubble.Move();
+            bubble.Move(dt);
         } else {
-            bubble.Move();
+            bubble.Move(dt);
+            if (Vector2.SqrMagnitude(bubble.landingPos - bubble.GetPos()) <= Mathf.Pow(GridConst.GridInsideRadius * 2, 2) + bubble.moveSpeed * dt) {
+                bubble.EnterArrived();
+            }
         }
     }
 

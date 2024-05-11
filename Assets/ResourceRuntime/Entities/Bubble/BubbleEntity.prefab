@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8116699229960328753}
   - component: {fileID: 8473027923396414733}
-  - component: {fileID: -7191261984752931403}
   - component: {fileID: 7085779776856487298}
   m_Layer: 8
   m_Name: BubbleEntity
@@ -52,7 +51,6 @@ MonoBehaviour:
   score: 0
   colorType: 0
   sr: {fileID: 1493971794776196482}
-  rb: {fileID: -7191261984752931403}
   faceDir: {x: 0, y: 0}
   moveSpeed: 0
   isReflect: 0
@@ -67,33 +65,6 @@ MonoBehaviour:
   down_timer: 0
   down_Duration: 0
   srPos: {x: 0, y: 0}
---- !u!50 &-7191261984752931403
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6068006777135191720}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!58 &7085779776856487298
 CircleCollider2D:
   m_ObjectHideFlags: 0
