@@ -34,7 +34,7 @@ public static class GameGameDomain {
                 // 重置grid
                 grid.Reuse();
                 // 播放消除vfx
-                VFXDomain.VFXPlay(ctx, bubble);
+                VFXDomain.Play(ctx, ctx.asset.configTM.vfx_BubbleBroke, bubble.GetPos());
             }
 
         });
@@ -50,6 +50,7 @@ public static class GameGameDomain {
                 return;
             }
             if (grid.isNeedFalling) {
+                grid.isNeedFalling = false;
                 bool has = ctx.bubbleRepo.TryGet(grid.bubbleId, out var bubble);
                 // bubble进入缓动
                 bubble.fsmCom.EnterFalling();

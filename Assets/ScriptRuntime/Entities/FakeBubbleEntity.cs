@@ -10,20 +10,20 @@ public class FakeBubbleEntity : MonoBehaviour {
     public Color color;
 
     public bool isMovingToShooterPos;
-    float moveTimer;
-    float moverDuration;
+    public float moveTimer;
+    public float moverDuration;
 
     public bool isChangeEasing;
-    float changeTimer;
-    float changeDuration;
+    public float changeTimer;
+    public float changeDuration;
 
     public FakeBubbleEntity() {
         faceDir = new Vector2(0, 1);
         moveTimer = 0;
-        moverDuration = 0.2f;
+        moverDuration = 0.1f;
 
         changeTimer = 0;
-        changeDuration = 0.2f;
+        changeDuration = 0.1f;
     }
 
     public void SetPos(Vector2 pos) {
@@ -38,11 +38,11 @@ public class FakeBubbleEntity : MonoBehaviour {
         if (!isMovingToShooterPos) {
             return;
         }
-        moveTimer += dt;
-        if (moveTimer >= moverDuration) {
+        if (moveTimer > moverDuration) {
             moveTimer = 0;
             isMovingToShooterPos = false;
         } else {
+            moveTimer += dt;
             transform.position = GFEasing.Ease2D(GFEasingEnum.Linear, moveTimer, moverDuration, VectorConst.ReadyPos, VectorConst.ShooterPos);
             transform.localScale = GFEasing.Ease2D(GFEasingEnum.Linear, moveTimer, moverDuration, VectorConst.scalehalf, VectorConst.scale1f);
         }
@@ -52,11 +52,16 @@ public class FakeBubbleEntity : MonoBehaviour {
         if (!isChangeEasing) {
             return;
         }
-        changeTimer += dt;
-        if (changeTimer >= changeDuration) {
+        if (changeTimer > changeDuration) {
+            // if (thisFakeInLeft) {
+            //     transform.position = VectorConst.ShooterPos;
+            // } else {
+            //     transform.position = VectorConst.ReadyPos;
+            // }
             isChangeEasing = false;
             changeTimer = 0;
         } else {
+            changeTimer += dt;
             if (thisFakeInLeft) {
                 transform.position = GFEasing.Ease2D(GFEasingEnum.Linear, changeTimer, changeDuration, VectorConst.ReadyPos, VectorConst.ShooterPos);
                 transform.localScale = GFEasing.Ease2D(GFEasingEnum.Linear, changeTimer, changeDuration, VectorConst.scalehalf, VectorConst.scale1f);

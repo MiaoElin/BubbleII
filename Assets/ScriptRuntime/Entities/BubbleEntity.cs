@@ -83,10 +83,12 @@ public class BubbleEntity : MonoBehaviour {
         if (!isFallingEasing) {
             return;
         }
-        falling_timer += dt;
+
         if (falling_timer <= falling_MounDuration) {
+            falling_timer += dt;
             sr.transform.position = GFEasing.Ease2D(GFEasingEnum.MountainInCirc, falling_timer, falling_MounDuration, fallingPos, new Vector2(fallingPos.x, fallingPos.y + 3));
         } else if (falling_timer <= falling_Duration) {
+            falling_timer += dt;
             sr.transform.position = GFEasing.Ease2D(GFEasingEnum.Linear, falling_timer, falling_MounDuration, fallingPos, fallingPos + Vector2.down * 15);
         } else {
             isFallingEasing = false;
@@ -108,12 +110,16 @@ public class BubbleEntity : MonoBehaviour {
         fsmCom.EnterArrived();
     }
 
+    public void EnterFalling() {
+        fsmCom.EnterFalling();
+    }
+
     public void DownEasing_Tick(float dt) {
         if (!isDownEasing) {
             return;
         }
-        down_timer += dt;
         if (down_timer <= down_Duration) {
+            down_timer += dt;
             sr.transform.position = GFEasing.Ease2D(GFEasingEnum.Linear, down_timer, down_Duration, srPos, GetPos());
         } else {
             isDownEasing = false;

@@ -15,3 +15,26 @@ MonoBehaviour:
   bgm1: {fileID: 8300000, guid: 11540dd8862d5f141a3ca46c6357d01f, type: 3}
   sfx_BubbleBroke: {fileID: 8300000, guid: f46279c5f0ec6664cafaa1aeee14f5ea, type: 3}
   sfx_click: {fileID: 8300000, guid: 56db934888168654689ea13e643e09db, type: 3}
+  vfx_BubbleBroke:
+  - {fileID: 21300000, guid: 2f621382823ffe2409a19e43eff3b8ce, type: 3}
+  - {fileID: 21300000, guid: 462dd574836168d499e986a71f9ace52, type: 3}
+  - {fileID: 21300000, guid: 723c3e8c6da10df468044ab2db023441, type: 3}
+  - {fileID: 21300000, guid: 51c9d4209cb05c448aa23dd13c2d0071, type: 3}
+  vfx_Win:
+  - {fileID: 3788407988472693366, guid: 5c6ffe78d80c9304bb333ef7a03e2f9b, type: 3}
+  - {fileID: 5920156715275587211, guid: 0fea8da4eac55ab4f97a54f97e15f06d, type: 3}
+  - {fileID: -1864101122837949180, guid: d31cf18e24d2c164c8768adb3044e227, type: 3}
+  - {fileID: 4709121064473725313, guid: f6f327b7206f33f418497b226e954afb, type: 3}
+  - {fileID: -2035285215231426675, guid: 8f07cf2f3509b81418f49d01fe3187cd, type: 3}
+  - {fileID: 4709121064473725313, guid: f6f327b7206f33f418497b226e954afb, type: 3}
+  - {fileID: -1864101122837949180, guid: d31cf18e24d2c164c8768adb3044e227, type: 3}
+  - {fileID: 4709121064473725313, guid: f6f327b7206f33f418497b226e954afb, type: 3}
+  - {fileID: -2035285215231426675, guid: 8f07cf2f3509b81418f49d01fe3187cd, type: 3}
+  - {fileID: 4709121064473725313, guid: f6f327b7206f33f418497b226e954afb, type: 3}
+  - {fileID: -1864101122837949180, guid: d31cf18e24d2c164c8768adb3044e227, type: 3}
+  - {fileID: 5920156715275587211, guid: 0fea8da4eac55ab4f97a54f97e15f06d, type: 3}
+  - {fileID: 3788407988472693366, guid: 5c6ffe78d80c9304bb333ef7a03e2f9b, type: 3}
+  - {fileID: 2259306705797733286, guid: 3bb2277bf2f210349a74520f6ea6e89d, type: 3}
+  - {fileID: 2259306705797733286, guid: 3bb2277bf2f210349a74520f6ea6e89d, type: 3}
+  - {fileID: 2259306705797733286, guid: 3bb2277bf2f210349a74520f6ea6e89d, type: 3}
+  - {fileID: 2259306705797733286, guid: 3bb2277bf2f210349a74520f6ea6e89d, type: 3}

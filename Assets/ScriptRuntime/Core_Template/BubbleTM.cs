@@ -7,6 +7,5 @@ public class BubbleTM : ScriptableObject {
     public ColorType colorType;
     public Sprite spr;
     public float moveSpeed;
-    public Sprite[] vfx_BubbleBroke;
 }
 

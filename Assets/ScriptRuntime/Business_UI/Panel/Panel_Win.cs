@@ -1,6 +1,7 @@
 using System;
 using UnityEngine.UI;
 using UnityEngine;
+using GameFunctions;
 
 public class Panel_Win : MonoBehaviour {
     [SerializeField] Text title;
@@ -13,8 +14,18 @@ public class Panel_Win : MonoBehaviour {
     public Action OnRestartHandle;
     public Action OnBackMenuHandle;
 
-    public Panel_Win() {
+    public bool isPanelEasingIn;
+    public float timer;
+    public float duration;
+    public Vector2 startPos;
+    public Vector2 endPos;
 
+    public Panel_Win() {
+        startPos = new Vector2(0, 460);
+        endPos = new Vector2(0, 0);
+        timer = 0;
+        duration = 1;
+        isPanelEasingIn = false;
     }
 
     public void Ctor() {
@@ -39,5 +50,19 @@ public class Panel_Win : MonoBehaviour {
 
     internal void Hide() {
         gameObject.SetActive(false);
+    }
+
+
+    public void EasingIn_Tick(float dt) {
+        if (!isPanelEasingIn) {
+            return;
+        }
+        if (timer <= duration) {
+            timer += dt;
+            transform.localPosition = GFEasing.Ease2D(GFEasingEnum.OutElastic, timer, duration, startPos, endPos);
+        } else {
+            timer = 0;
+            isPanelEasingIn = false;
+        }
     }
 }

@@ -31,7 +31,6 @@ public static class GameBusiness_Normal {
         ctx.shooter = ShooterDomain.Spawn(ctx);
         ctx.shooter.readyBubble1 = FakeBubbleDomain.Spawn(ctx, UnityEngine.Random.Range(1, 5), VectorConst.ShooterPos, VectorConst.scale1f);
         ctx.shooter.readyBubble2 = FakeBubbleDomain.Spawn(ctx, UnityEngine.Random.Range(1, 5), VectorConst.ReadyPos, VectorConst.scalehalf);
-
         ctx.gameFsmCom.EnterNormal();
     }
 
@@ -59,10 +58,13 @@ public static class GameBusiness_Normal {
     }
 
     public static void ApplyResult(GameContext ctx) {
-        // var game = ctx.game;
-        // if (game.score >= game.stage.targetCore) {
-        //     ctx.gameFsmCom.EnterResult(true);
-        // }
+        var game = ctx.game;
+        if (game.score >= game.stage.targetCore) {
+            // 关闭射线
+            ctx.shooter.SetLinREnable(false);
+            // 进入胜利页
+            ctx.gameFsmCom.EnterResult(true);
+        }
     }
     public static void FixedTick(GameContext ctx, float dt) {
 

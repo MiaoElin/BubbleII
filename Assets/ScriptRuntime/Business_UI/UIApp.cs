@@ -48,7 +48,7 @@ public class UIApp {
         PanelGameStatusDomain.Tick(ctx, score);
     }
 
-    public void Panel_Win_Open(int stageLevel, int score) {
+    public Panel_Win Panel_Win_Open(int stageLevel, int score) {
         var panel = ctx.TryGet_UI<Panel_Win>();
         if (panel == null) {
             ctx.TryGet_UI_Prefab(typeof(Panel_Win).Name, out var prefab);
@@ -57,6 +57,8 @@ public class UIApp {
             ctx.Add_UI(typeof(Panel_Win).Name, panel.gameObject);
         }
         panel.Init(stageLevel, score);
+        panel.gameObject.SetActive(true);
+        return panel;
     }
 
     public void Panel_Win_Hide() {
@@ -64,4 +66,8 @@ public class UIApp {
         paenl?.Hide();
     }
 
+    public void Panel_Win_EasingIn_Tick(float dt) {
+        var Panel = ctx.TryGet_UI<Panel_Win>();
+        Panel?.EasingIn_Tick(dt);
+    }
 }
